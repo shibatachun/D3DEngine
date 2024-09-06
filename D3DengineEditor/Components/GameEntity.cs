@@ -17,16 +17,16 @@ namespace D3DengineEditor.Components
     public class GameEntity : ViewModelBase
     {
 
-        private bool _isEnable = true;
+        private bool _isEnabled = true;
         [DataMember]
         public bool IsEnabled
         {
-            get => _isEnable;
+            get => _isEnabled;
             set
             {
-                if (_isEnable != value)
+                if (_isEnabled != value)
                 {
-                    _isEnable = value;
+                    _isEnabled = value;
                     OnPropertyChanged(nameof(IsEnabled));
                 }
             }
@@ -67,17 +67,17 @@ namespace D3DengineEditor.Components
 
             RenameCommand = new RelayCommand<string>(x =>
             {
-                var oldNmae = _name;
+                var oldName = _name;
                 Name = x;
-                Project.UndoRedo.Add(new UndoRedoAction(nameof(Name), this, oldNmae, x, $"Rename entity '{oldNmae}' to '{x}'"));
+                Project.UndoRedo.Add(new UndoRedoAction(nameof(Name), this, oldName, x, $"Rename entity '{oldName}' to '{x}'"));
             }, x=>x !=_name);
 
 
             IsEnableCommand= new RelayCommand<bool>(x =>
             {
-                var oldNmae = _name;
-                Name = x;
-                Project.UndoRedo.Add(new UndoRedoAction(nameof(Name), this, oldNmae, x, $"Rename entity '{oldNmae}' to '{x}'"));
+                var oldValue = _isEnabled;
+                IsEnabled = x;
+                Project.UndoRedo.Add(new UndoRedoAction(nameof(IsEnabled), this, oldValue, x, x ? $"Enable {Name}" : $"Disable {Name}"));
             });
 
         }

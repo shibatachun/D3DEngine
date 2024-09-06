@@ -165,7 +165,8 @@ namespace D3DengineEditor.GameProject
             }catch(Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                return string.Empty;
+                Logger.Log(MessageType.Error, $"Failed to create {ProjectName}");
+                throw;
             }
         }
         public NewProject()
@@ -191,7 +192,8 @@ namespace D3DengineEditor.GameProject
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                //TODO: log error
+                Logger.Log(MessageType.Error, $"Failed to read project templates");
+                throw;
             }
         }
 

@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
+using System.Windows.Shapes;
 using Accessibility;
 using D3DengineEditor.GameProject;
 using D3DengineEditor.Utilities;
@@ -102,6 +103,8 @@ namespace D3DengineEditor.GameProject
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
+                Logger.Log(MessageType.Error, $"Failed to read project data ");
+                throw;
             }
         }
 

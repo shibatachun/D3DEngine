@@ -16,8 +16,10 @@ using System.Windows.Input;
 namespace D3DengineEditor.GameProject
 {
     [DataContract(Name = "Game")]
+    //Project类，总的一个大类，囊括整个project,因为需要序列化到文件中，所以需要DataContract
     public class Project : ViewModelBase
     {
+        //Project类成员
         public static string Extension { get; } = ".dde";
         [DataMember]
         public string Name { get; private set; } = "New Project";
@@ -27,12 +29,14 @@ namespace D3DengineEditor.GameProject
         public string FullPath => $@"{Path}{Name}\{Name}{Extension}";
 
         [DataMember(Name = "Scenes")]
+        //使用ObservableCollection是因为需要显示在打开project的界面中，往后的组件等同理
         private ObservableCollection<Scene> _scenes = new ObservableCollection<Scene>();
 
         public ReadOnlyObservableCollection<Scene> Scenes { get; private set; }
 
         private Scene _actriveScene;
         
+        //确认是否是当前激活的Scene
         public Scene ActiveScene
         {
             get => _actriveScene;
@@ -70,14 +74,16 @@ namespace D3DengineEditor.GameProject
             Debug.Assert(File.Exists(file));
             return Serializer.FromFile<Project>(file);
         }
+        //当前project unload也就是说退出当前Project是，重设undoredo的list
         public void Unload()
         {
-
+            UndoRedo.Reset();
         }
 
         public static void Save(Project project)
         {
             Serializer.ToFile(project,project.FullPath);
+            Logger.Log(MessageType.Info, $"Project saved to {project.FullPath}");
         }
 
         [OnDeserialized]
