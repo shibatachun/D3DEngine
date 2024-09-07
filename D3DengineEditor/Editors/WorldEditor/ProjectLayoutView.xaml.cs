@@ -36,11 +36,8 @@ namespace D3DengineEditor.Editors
 
         private void OnGameEntities_ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            GameEntityView.Instance.DataContext = null;
-            if (e.AddedItems.Count > 0)
-            {
-                GameEntityView.Instance.DataContext = (sender as ListBox).SelectedItems[0];
-            }
+            
+     
 
             //What selections before
             var listBox = sender as ListBox;
@@ -63,6 +60,14 @@ namespace D3DengineEditor.Editors
 
                 "Selection chagned"
                 ));
+
+            MSGameEntity msEntity = null;
+            if(newSelection.Any())
+            {
+                msEntity = new MSGameEntity(newSelection);
+
+            }
+            GameEntityView.Instance.DataContext = msEntity; 
           
            
         }

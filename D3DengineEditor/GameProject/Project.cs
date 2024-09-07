@@ -17,7 +17,7 @@ namespace D3DengineEditor.GameProject
 {
     [DataContract(Name = "Game")]
     //Project类，总的一个大类，囊括整个project,因为需要序列化到文件中，所以需要DataContract
-    public class Project : ViewModelBase
+    class Project : ViewModelBase
     {
         //Project类成员
         public static string Extension { get; } = ".dde";

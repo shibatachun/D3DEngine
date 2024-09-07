@@ -15,7 +15,7 @@ using System.Windows.Input;
 namespace D3DengineEditor.GameProject
 {
     [DataContract]
-    public class Scene : ViewModelBase
+    class Scene : ViewModelBase
     {
         private string _name;
         [DataMember]
