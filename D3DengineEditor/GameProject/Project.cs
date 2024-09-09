@@ -19,15 +19,16 @@ namespace D3DengineEditor.GameProject
     //Project类，总的一个大类，囊括整个project,因为需要序列化到文件中，所以需要DataContract
     class Project : ViewModelBase
     {
-        //Project类成员
+        //Project文件的后缀
         public static string Extension { get; } = ".dde";
         [DataMember]
-        public string Name { get; private set; } = "New Project";
+        public string Name { get; private set; } = "New Project";                   //默认名字
         [DataMember]
-        public string Path { get; private set; }
+        public string Path { get; private set; }                                    //路径
 
-        public string FullPath => $@"{Path}{Name}\{Name}{Extension}";
+        public string FullPath => $@"{Path}{Name}\{Name}{Extension}";               //Project.dde文件的路径
 
+        //新建一个序列化的分类
         [DataMember(Name = "Scenes")]
         //使用ObservableCollection是因为需要显示在打开project的界面中，往后的组件等同理
         private ObservableCollection<Scene> _scenes = new ObservableCollection<Scene>();
@@ -49,6 +50,7 @@ namespace D3DengineEditor.GameProject
                 }
             }
         }
+        //简化表达式和方法，如果后面的强制转换成功的话则返回Project类型，DataContext转化为Project类数据
         public static Project Current => Application.Current.MainWindow.DataContext as Project;
 
         public static UndoRedo UndoRedo {  get;  } = new UndoRedo();

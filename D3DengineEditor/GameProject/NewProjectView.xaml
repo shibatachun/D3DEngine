@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:D3DengineEditor.GameProject"
              mc:Ignorable="d"  Width="800"
              d:DesignHeight="450" d:DesignWidth="800">
+    <!--这里绑定了New Project的DataContext，自然可以获取到里面的数据，包括template等,这里会自动调用New Project的构造器里的函数-->
     <UserControl.DataContext>
         <local:NewProject />
     </UserControl.DataContext>
@@ -13,6 +14,8 @@
      
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
             
+            
+            <!--这里的list box则是展示里面的template, 绑定了里面的ProjectTemplates-->
             <ListBox Width="195" Height="250" ItemsSource="{Binding ProjectTemplates}" x:Name="templateListBox"
                      SelectedIndex="0">
                 <ListBox.ItemTemplate>
@@ -24,23 +27,29 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            
+            <!--用于展示预览图的Border-->
             <Border Width="400" Height="250" Margin="5,0,0,0">
                 <Border.Background>
+                    
                     <ImageBrush ImageSource="{Binding Path=SelectedItem.Screenshot,ElementName=templateListBox}"/>
                 </Border.Background>
             </Border>
         </StackPanel >
+        
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
                     Margin="0,30,0,0">
             <TextBlock Text="Name" Width="50"/>
             <TextBox Width="550" Text="{Binding ProjectName, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
+        
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
               Margin="0,5,0,0">
             <TextBlock Text="Path" Width="50"/>
             <TextBox Width="500" Text="{Binding ProjectPath, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Content="Browse" Width="45" Margin="5,0,0,0"/>
         </StackPanel>
+        
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
             Margin="0,30,0,0">
          
@@ -48,6 +57,8 @@
                     Click="OnCreate_Button_Click"/>
             <Button Content="Exit" Width="96" Margin="30,0,0,0" IsCancel="True"/>
         </StackPanel>
+        
         <TextBlock Text="{Binding ErrorMsg}" Margin="0,20,0,0" HorizontalAlignment="Center"/>
+        
     </StackPanel>
 </UserControl>

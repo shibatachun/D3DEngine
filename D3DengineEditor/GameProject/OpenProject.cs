@@ -16,16 +16,17 @@ using D3DengineEditor.Utilities;
 namespace D3DengineEditor.GameProject
 {
     [DataContract]
+    //Project Data类，用来记录project的数据
     public class ProjectData
     {
         [DataMember]
-        public string ProjectName { get; set; }
+        public string ProjectName { get; set; }                 //Project的名字
         [DataMember]
-        public string ProjectPath { get; set; }
+        public string ProjectPath { get; set; }                 //Project所在的路径
         [DataMember]
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; }                      //创建日期或者最后活动日期？
 
-        public string FullPath { get=>$"{ProjectPath}{ProjectName}{Project.Extension}";}
+        public string FullPath { get=>$"{ProjectPath}{ProjectName}{Project.Extension}";}    //完整的project的.dde的路径
 
         public byte[] Icon { get; set; }
         public byte[] Screenshot { get; set; }
@@ -34,6 +35,7 @@ namespace D3DengineEditor.GameProject
         //public string ProjectFilePath { get; set; }
     }
 
+    //ProjectData List类
     public class ProjectDataList
     {
         [DataMember]
@@ -69,6 +71,7 @@ namespace D3DengineEditor.GameProject
             var projects = _projects.OrderBy(x => x.Date).ToList();
             Serializer.ToFile(new ProjectDataList(){ Projects = projects}, _projectDataPath);
         }
+        //从oepn project或者new project进来的，打开project，参数为一个ProjectData类
         public static Project Open(ProjectData data)
         {
             ReadProjectData();
