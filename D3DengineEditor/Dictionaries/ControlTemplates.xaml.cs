@@ -35,5 +35,24 @@ namespace D3DengineEditor.Dictionaries
                 Keyboard.ClearFocus();
             }
         }
+
+        private void OnClose_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var window = (Window)((FrameworkElement)sender).TemplatedParent;
+            window.Close();
+        }
+
+        private void OnMaximizeRestore_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var window = (Window)((FrameworkElement)sender).TemplatedParent;
+            window.WindowState = (window.WindowState == WindowState.Maximized)?
+                WindowState.Normal: WindowState.Maximized;  
+        }
+
+        private void OnMinimize_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var window = (Window)((FrameworkElement)sender).TemplatedParent;
+            window.WindowState = WindowState.Minimized;
+        }
     }
 }

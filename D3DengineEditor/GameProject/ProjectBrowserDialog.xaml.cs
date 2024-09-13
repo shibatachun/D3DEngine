@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using D3DengineEditor.GameProject;
@@ -21,6 +22,7 @@ namespace D3DengineEditor.GameProject
     /// </summary>
     public partial class ProjectBrowserDialog : Window
     {
+        private readonly CubicEase _easing = new CubicEase() { EasingMode=EasingMode.EaseOut };
         public ProjectBrowserDialog()
         {
             InitializeComponent();
@@ -41,7 +43,31 @@ namespace D3DengineEditor.GameProject
             }
 
         }
+        private void AnimateToCreateProject()
+        {
+            var highlightAnimation = new DoubleAnimation(200, 400, new Duration(TimeSpan.FromSeconds(0.2)));
+            highlightAnimation.Completed += (s, e) =>
+            {
+                var animation = new ThicknessAnimation(new Thickness(0), new Thickness(-1600, 0, 0, 0), new Duration(TimeSpan.FromSeconds(0.5)));
+                animation.EasingFunction = _easing;
+                browserContent.BeginAnimation(MarginProperty, animation);
+            };
 
+            highlightRect.BeginAnimation(Canvas.LeftProperty, highlightAnimation);
+        }
+
+        private void AnimateToOpenProject()
+        {
+            var highlightAnimation = new DoubleAnimation(400, 200, new Duration(TimeSpan.FromSeconds(0.2)));
+            highlightAnimation.Completed += (s, e) =>
+            {
+                var animation = new ThicknessAnimation(new Thickness(-1600, 0, 0, 0), new Thickness(0), new Duration(TimeSpan.FromSeconds(0.5)));
+                animation.EasingFunction = _easing; 
+                browserContent.BeginAnimation(MarginProperty,animation);
+            };
+
+            highlightRect.BeginAnimation(Canvas.LeftProperty, highlightAnimation);
+        }
         private void OnToggleButton_Click(object sender, RoutedEventArgs e)
         {
             //如果触发的是open project 的button的话，进行以下逻辑
@@ -52,8 +78,12 @@ namespace D3DengineEditor.GameProject
                 {
                     //uncheck the create project button
                     createProjectButton.IsChecked = false;
+                    AnimateToOpenProject();
+                    openProjectButton.IsEnabled = false;
+                    createProjectButton.IsEnabled = true;
                     //切换到open project的页面, thickness是用来设置margin，包含一些参数，分别是left top right bottom
-                    browserContent.Margin = new Thickness(0);
+
+                    //browserContent.Margin = new Thickness(0);
                 }
                 openProjectButton.IsChecked = true;
             }
@@ -63,10 +93,15 @@ namespace D3DengineEditor.GameProject
                 {
                     openProjectButton.IsChecked = false;
                     //切换到New project的页面
-                    browserContent.Margin = new Thickness(-800,0,0,0);
+                    AnimateToCreateProject();
+                    openProjectButton.IsEnabled = true;
+                    createProjectButton.IsEnabled = false;
+                    //browserContent.Margin = new Thickness(-800,0,0,0);
                 }
                 createProjectButton.IsChecked = true;
             }
         }
+
+      
     }
 }

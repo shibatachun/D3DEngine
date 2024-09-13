@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:D3DengineEditor"
         xmlns:editors="clr-namespace:D3DengineEditor.Editors"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
-        Title="D3Dengine" Height="1080" Width="1920">
+        Title="D3Dengine" Height="1080" Width="1920"
+        Style="{StaticResource D3DWindowStyle}">
     <Grid>
         <editors:WorldEditorView/>
 
