@@ -22,11 +22,19 @@
                      SelectedIndex="0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="{Binding Icon}" Margin="0,0,5,0"/>
-                                <TextBlock Text="{Binding ProjectType}"/>
-                            </StackPanel>
+             
+                            <Viewbox>
+                                <StackPanel Width="180">
+                                    <StackPanel Orientation="Horizontal" >
+                                        <Image Source="{Binding Icon}"  Margin="0,0,5,0" Width="30" Height="30"/>
+                                        <TextBlock Text="{Binding  ProjectType}" FontSize="18" VerticalAlignment="Center" Margin="20,0,0,0" FontFamily="Bahnschrift condensed"/>
+                                    </StackPanel>
+
+                                </StackPanel>
+
+                            </Viewbox>
                         </DataTemplate>
+                   
                     </ListBox.ItemTemplate>
                 </ListBox>
 
@@ -61,7 +69,7 @@
             </StackPanel>
 
             <TextBlock Text="{Binding ErrorMsg}" Foreground="{StaticResource Editor.RedBrush}"
-                       Margin="0,10,0,0" HorizontalAlignment="Center"/>
+                        HorizontalAlignment="Center"/>
 
         </StackPanel>
     </Border>

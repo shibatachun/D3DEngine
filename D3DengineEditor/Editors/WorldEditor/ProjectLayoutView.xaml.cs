@@ -65,6 +65,7 @@ namespace D3DengineEditor.Editors
             if(newSelection.Any())
             {
                 msEntity = new MSGameEntity(newSelection);
+                listBox.Focus();
 
             }
             GameEntityView.Instance.DataContext = msEntity; 
