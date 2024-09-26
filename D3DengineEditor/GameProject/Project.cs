@@ -53,6 +53,7 @@ namespace D3DengineEditor.GameProject
         //简化表达式和方法，如果后面的强制转换成功的话则返回Project类型，DataContext转化为Project类数据
         public static Project Current => Application.Current.MainWindow.DataContext as Project;
 
+        //new了一个undoredo list
         public static UndoRedo UndoRedo {  get;  } = new UndoRedo();
 
         public ICommand UndoCommand {  get; private set; }

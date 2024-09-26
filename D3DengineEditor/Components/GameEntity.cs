@@ -157,44 +157,46 @@ namespace D3DengineEditor.Components
        
         public List<GameEntity> SelectedEntities { get; }
 
-     
-        public static float? GetMixedValue(List<GameEntity> entities, Func<GameEntity, float> getProperty)
+        private void MakeComponentList()
         {
-            var value = getProperty(entities.First());
-            foreach (var entity in entities.Skip(1)) {
-                if (!value.IsTheSameAs(getProperty(entity)))
+            _components.Clear ();
+            //获取第一个被选择的entity
+            var firstEntity = SelectedEntities.FirstOrDefault();
+            if (firstEntity == null) return;
+
+            //遍历第一个entity里面拥有的component
+            foreach (var component in firstEntity.Components)
+            {
+                //获得component的类型
+                var type = component.GetType();
+                //遍历选择的entity，逐个查看看他们有没有这个类型的component
+                if(!SelectedEntities.Skip(1).Any(entity => entity.GetComponent(type) == null))
                 {
-                    return null;
+                    //如果有的话，添加找到list，加一个断言，除了第一个之外
+                    Debug.Assert(Components.FirstOrDefault(x => x.GetType() == type) == null);
+                    _components.Add(component.GetMultiselectionComponent(this));
                 }
-            
             }
-            return value;
+        }
+        public static float? GetMixedValue<T>(List<T> objects, Func<T, float> getProperty)
+        {
+            var value = getProperty(objects.First());
+            //与selected item中的第一个值进行比较，有一个不同的值就复制为null
+            return objects.Skip(1).Any(x => !getProperty(x).IsTheSameAs(value)) ? (float?)null : value ;
+   
         }   
-        public static bool? GetMixedValue(List<GameEntity> entities, Func<GameEntity, bool> getProperty)
+        public static bool? GetMixedValue<T>(List<T> objects, Func<T, bool> getProperty)
         {
-            var value = getProperty(entities.First());
-            foreach (var entity in entities.Skip(1)) {
-                if (value != getProperty(entity))
-                {
-                    return null;
-                }
-            
-            }
-            return value;
+            var value = getProperty(objects.First());
+            //与selected item中的第一个值进行比较，有一个不同的值就复制为null
+            return objects.Skip(1).Any(x =>value != getProperty(x)) ? (bool?)null : value;
         }
 
-        public static string GetMixedValue(List<GameEntity> entities, Func<GameEntity, string> getProperty)
+        public static string GetMixedValue<T>(List<T> objects, Func<T, string> getProperty)
         {
-            var value = getProperty(entities.First());
-            foreach (var entity in entities.Skip(1))
-            {
-                if (value != getProperty(entity))
-                {
-                    return null;
-                }
-
-            }
-            return value;
+            var value = getProperty(objects.First());
+            //与selected item中的第一个值进行比较，有一个不同的值就复制为null
+            return objects.Skip(1).Any(x => value != getProperty(x)) ? null : value;
         }
         //更新每个GameEntities的里面的值
         protected virtual bool UpdateGameEntities(string propertyName)
@@ -217,8 +219,12 @@ namespace D3DengineEditor.Components
         {
             _enableUpdates = false;
             UpdateMSGameEntity();
+            MakeComponentList();
             _enableUpdates = true;
         }
+
+     
+
         protected MSEntity(List<GameEntity> entities)
         {
             Debug.Assert (entities?.Any() == true);

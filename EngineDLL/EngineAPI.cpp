@@ -9,14 +9,18 @@
 
 using namespace d3d;
 namespace {
+	//这里需要对应的transform component来对应C#中传过来的来的数据，然后再进行数据转换，因为在引擎内部处理是使用四元数来进行转换的
 struct transform_component
 {
+	//三个传过来的数
 	f32 position[3];
 	f32 rotation[3];
 	f32 scale[3];
 	transform::init_info to_init_info()
 	{
+		//使用DirectX的数学库进行计算
 		using namespace DirectX;
+		
 		transform::init_info info{};
 		memcpy(&info.position[0], &position[0], sizeof(f32) * _countof(position));
 		memcpy(&info.scale[0], &scale[0], sizeof(f32) * _countof(scale));
