@@ -24,6 +24,7 @@ namespace D3DengineEditor
         public EnginePathDialog()
         {
             InitializeComponent();
+            Owner = Application.Current.MainWindow;
         }
 
         private void OnOk_Button_Click(object sender, RoutedEventArgs e)
@@ -43,6 +44,12 @@ namespace D3DengineEditor
 
                 messageTextBlock.Text = "Unable to fine the engine at the specified location."; 
             
+            }
+            if (string.IsNullOrEmpty(messageTextBlock.Text)) {
+                if (!Path.EndsInDirectorySeparator(path)) path += @"\";
+                D3DPath = path;
+                DialogResult = true;
+                Close();
             }
         }
     }

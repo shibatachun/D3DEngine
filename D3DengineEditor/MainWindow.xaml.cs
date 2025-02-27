@@ -62,9 +62,10 @@ namespace D3DengineEditor
             if (enginePath == null || !Directory.Exists(Path.Combine(enginePath, @"D3DEngine\EngineAPI")))
             {
                 var dlg = new EnginePathDialog();
-                if (dlg.showDialog() == true)
+                if (dlg.ShowDialog() == true)
                 {
-
+                    D3DPath = dlg.D3DPath;
+                    Environment.SetEnvironmentVariable("D3D_ENGINE",D3DPath.ToUpper(), EnvironmentVariableTarget.User);
                 }
                 else
                 {

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:D3DengineEditor"
         mc:Ignorable="d" Style="{StaticResource D3DDialogStyle}"
+        ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
         Title="EnginePathDialog" Height="250" Width="400">
     <Border CornerRadius="3" Background="{StaticResource Editor.Window.GrayBrush3}" HorizontalAlignment="Stretch" Margin="10">
         <Border.Effect>
@@ -15,7 +16,7 @@
                        Margin="0,10,0,0" TextWrapping="Wrap" x:Name="messageTextBlock"/>
             <DockPanel>
                 <TextBlock Text="Engine Path" Width="72" Style="{StaticResource LightTextBlockStyle}"/>
-                <TextBlock x:Name="pathTextBox"/>
+                <TextBox x:Name="pathTextBox"/>
             </DockPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom"
                         HorizontalAlignment="Right" Margin="0,0,0,20">
