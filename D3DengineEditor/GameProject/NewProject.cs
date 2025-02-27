@@ -33,6 +33,8 @@ namespace D3DengineEditor.GameProject
         public string ScreenshotFilePath { get; set; }          //此template的预览图路径
         public string ProjectFilePath { get; set; }             //此template的project文件路径
 
+        public string TemplatePath {  get; set; }
+
     }
 
     //这是new project类，继承自ViewModel，属于一个ViewMode. 来进行model层和view层的交互逻辑：类
@@ -201,6 +203,8 @@ namespace D3DengineEditor.GameProject
                 var projectPath = Path.GetFullPath(Path.Combine(path,$"{ProjectName}{Project.Extension}"));
                 //往这个路径写入project xml的所有内容，至此，项目创建完毕
                 File.WriteAllText(projectPath,projectXml);
+                    
+                CreateMSVCSolution(template, path);
                 return path;
 
                 
@@ -211,6 +215,32 @@ namespace D3DengineEditor.GameProject
                 throw;
             }
         }
+
+        private void CreateMSVCSolution(ProjectTemplate template, string projectPath)
+        {
+            Debug.Assert(File.Exists(Path.Combine(template.TemplatePath, "MSVCSolution")));
+            Debug.Assert(File.Exists(Path.Combine(template.TemplatePath, "MSVCProject")));
+
+            var engineAPIPath = Path.Combine(MainWindow.D3DPath, @"D3DEngine\EngineAPI\");
+            Debug.Assert(Directory.Exists(engineAPIPath));
+
+            var _0 = ProjectName;
+            var _1 = "{"+ Guid.NewGuid().ToString().ToUpper()+"}";
+
+            var _2 = engineAPIPath;
+            var _3 = MainWindow.D3DPath;
+            var solution = File.ReadAllText(Path.Combine(template.TemplatePath, "MSVCSolution"));
+            solution = string.Format(solution, _0,_1, "{" + Guid.NewGuid().ToString().ToUpper() + "}");
+            File.WriteAllText(Path.GetFullPath(Path.Combine(projectPath, $"{_0}.sln")),solution);
+
+            var project = File.ReadAllText(Path.Combine(template.TemplatePath, "MSVCProject"));
+            project = string.Format(project, _0, _1,_2,_3);
+
+            File.WriteAllText(Path.GetFullPath(Path.Combine(projectPath, $"Gamecode/{_0}.vcxproj")), project);
+
+
+        }
+
         //New project类的构造器
         public NewProject()
         {
@@ -234,6 +264,8 @@ namespace D3DengineEditor.GameProject
                     template.Screenshot = File.ReadAllBytes(template.ScreenshotFilePath);
                     //获得这个template里的project file的full path
                     template.ProjectFilePath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(file), template.ProjectFile));
+
+                    template.TemplatePath = Path.GetDirectoryName(file);
                     //把这个template project的实例添加到observable collection里，以备在view中进行展示,因为序列化的过程中没有把这些文件的path写进去
                     _projectTemplates.Add(template);
                 }

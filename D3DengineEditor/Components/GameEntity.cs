@@ -46,9 +46,10 @@ namespace D3DengineEditor.Components
                         EntityId = EngineAPI.CreateGameEntity(this);
                         Debug.Assert(ID.IsValid(_entityId));
                     }
-                    else
+                    else if(ID.IsValid(EntityId)) 
                     {
                         EngineAPI.RemoveGameEntity(this);
+                        EntityId = ID.INVALID_ID;
                     }
                     OnPropertyChanged(nameof(IsActive));
                 }
@@ -157,6 +158,10 @@ namespace D3DengineEditor.Components
        
         public List<GameEntity> SelectedEntities { get; }
 
+        public T GetMSComponent<T>() where T : IMSComponent
+        {
+            return (T)Components.FirstOrDefault(x => x.GetType() == typeof(T));
+        }    
         private void MakeComponentList()
         {
             _components.Clear ();

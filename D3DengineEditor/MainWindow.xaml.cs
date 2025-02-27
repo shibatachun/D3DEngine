@@ -1,6 +1,7 @@
 ﻿using D3DengineEditor.GameProject;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace D3DengineEditor
 {
@@ -21,6 +22,8 @@ namespace D3DengineEditor
     //这里是partial class是因为要结合MainWindow.xaml，这两个结合才是一个完整的MainWindow类，所以使用partial
     public partial class MainWindow : Window
     {
+
+        public static string D3DPath { get; private set; } = @"E:\Schoolwork\D3Dengine\D3DEngine";
         //开始加载组件
         public MainWindow()
         {
@@ -31,7 +34,9 @@ namespace D3DengineEditor
             //关闭时要发生的一个东西
             Closing += OnMainWindowClosing;
         }
-        
+
+       
+
         //在关闭window使用的方法，需注意要跟Closing的接受参数相同
         private void OnMainWindowClosing(object? sender, CancelEventArgs e)
         {
@@ -46,8 +51,30 @@ namespace D3DengineEditor
         {
             //同上
             this.Loaded -= OnMainWindowLoaded;
+            GetEnginePath();
             //在开始的时候，我们选择打开projectBrowser,这个是下面定义的一个方法。
             OpenProjectBrowserDialog();
+        }
+
+        private void GetEnginePath()
+        {
+            var enginePath = Environment.GetEnvironmentVariable("D3D_ENGINE",EnvironmentVariableTarget.User);
+            if (enginePath == null || !Directory.Exists(Path.Combine(enginePath, @"D3DEngine\EngineAPI")))
+            {
+                var dlg = new EnginePathDialog();
+                if (dlg.showDialog() == true)
+                {
+
+                }
+                else
+                {
+                    Application.Current.Shutdown();
+                }
+            }
+            else
+            {
+                D3DPath = enginePath;
+            }
         }
 
         //自定方法，目的是创建一个新的ProjectBrowserDialog实例，是一个window wpf。

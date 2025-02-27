@@ -65,6 +65,7 @@ namespace D3DengineEditor.Dictionaries
         private void OnTextBoxRename_LostFocus(object sender, RoutedEventArgs e)
         {
             var textBox = sender as TextBox;
+            if(!textBox.IsVisible) return;  
             var exp = textBox.GetBindingExpression(TextBox.TextProperty);
             if (exp != null)
             {

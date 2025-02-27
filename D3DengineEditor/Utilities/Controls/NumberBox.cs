@@ -99,6 +99,7 @@ namespace D3DengineEditor.Utilities.Controls
 
             _multiplier = 0.01;
             _mouseStart = e.GetPosition(this).X;
+            Focus();
 
             
         }

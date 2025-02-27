@@ -6,7 +6,7 @@ namespace d3d::id {
 //id的类型是无符号32位数，比如00000000,00000000,000000000,00000000, 这里using是起别名
 using id_type = u32;
 //internal namespace
-namespace internal {
+namespace detail {
 
 constexpr u32 generation_bits{ 8 };
 //因为被定义位32位，返回值是4个字节，因为32有4个byte，一个byte有8bits，所以需要乘以8，然后减去刚刚定义的8位，表明剩下的index的位数可以是24位
@@ -23,10 +23,10 @@ constexpr id_type invalid_id{ id_type(-1)};
 
 constexpr u32 min_deleted_elements{ 1024 };
 
-using generation_type = std::conditional_t< internal::generation_bits <= 16, std::conditional_t<internal::generation_bits <= 8, u8, u16>, u32>;
+using generation_type = std::conditional_t< detail::generation_bits <= 16, std::conditional_t<detail::generation_bits <= 8, u8, u16>, u32>;
 
 //确保generation type能够容纳哦generation bit
-static_assert(sizeof(generation_type) * 8 >= internal::generation_bits);
+static_assert(sizeof(generation_type) * 8 >= detail::generation_bits);
 
 static_assert(sizeof(id_type) - sizeof(generation_type) > 0);
 
@@ -40,8 +40,8 @@ is_valid(id_type id)
 constexpr id_type
 index(id_type id)
 {
-	id_type index{ id & internal::index_mask };
-	assert(index != internal::index_mask);
+	id_type index{ id & detail::index_mask };
+	assert(index != detail::index_mask);
 	return index;
 }
 
@@ -49,7 +49,7 @@ index(id_type id)
 constexpr id_type
 generation(id_type id)
 {
-	return (id >> internal::index_bits) & internal::generation_mask;
+	return (id >> detail::index_bits) & detail::generation_mask;
 }
 	
 /*
@@ -61,14 +61,14 @@ new_generation(id_type id)
 {
 	const id_type generation{ id::generation(id) + 1 };
 	//u64,表示一个64位无符号的数，初始值为1, 然后左移操作，当前generation的位数是8，结果是256，256-1回归第8位，00000001 00000000变成00000000 11111111 意思是255.我们不能让generation超过255，不然会引起冲突
-	assert(generation < (( (u64)1 << internal::generation_bits)-1) );
-	return index(id) | (generation << internal::index_bits);
+	assert(generation < (( (u64)1 << detail::generation_bits)-1) );
+	return index(id) | (generation << detail::index_bits);
 }
 
 //分DeBug模式和release模式的id type，定义一种类型安全的ID类型name，以免不同的ID混淆
 #if _DEBUG
 	//定义了一个内部结构体
-	namespace internal {
+	namespace detail {
 		struct id_base
 		{
 			//编译过程中声明explicit，id_base这个构造函数可以在编译中执行，exlicity防止隐式转换
@@ -81,7 +81,7 @@ new_generation(id_type id)
 	}
 	//这个宏为 name 定义了一个类型安全的 ID 结构体，继承自 id::internal::id_base
 #define DEFINE_TYPED_ID(name)									\
-		struct name final : id::internal::id_base				\
+		struct name final : id::detail::id_base				\
 		{														\
 			constexpr explicit name(id::id_type id)				\
 				:id_base{ id } {}								\
