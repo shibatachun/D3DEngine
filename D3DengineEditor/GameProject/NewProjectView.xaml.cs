@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using D3DengineEditor.GameProject;
+
 
 
 namespace D3DengineEditor.GameProject
@@ -53,6 +56,24 @@ namespace D3DengineEditor.GameProject
             //返回result
             win.DialogResult = dialogResult;
             win.Close();
+        }
+
+        private void OnBrowse_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = DataContext as NewProject;
+          
+            Microsoft.Win32.OpenFolderDialog dialog = new();
+
+            dialog.Multiselect = false;
+            dialog.Title = "Select a folder";
+
+            bool? result = dialog.ShowDialog();
+
+            if (result == true)
+            {
+                vm.ProjectPath  = dialog.FolderName;
+                
+            }
         }
     }
 }

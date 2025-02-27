@@ -57,7 +57,7 @@
               Margin="0,5,0,0">
                 <TextBlock Text="Path" Width="50" Style="{StaticResource LightTextBlockStyle}"/>
                 <TextBox Width="500" Text="{Binding ProjectPath, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button Content="Browse" Width="45" Margin="5,0,0,0"/>
+                <Button Content="Browse" Width="45" Margin="5,0,0,0" Click="OnBrowse_Button_Click"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"

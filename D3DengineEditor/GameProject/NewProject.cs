@@ -71,7 +71,7 @@ namespace D3DengineEditor.GameProject
                 {
                     _projectPath = value;
                     ValidateProjectPathAndName();
-                    OnPropertyChanged(nameof(Path));
+                    OnPropertyChanged(nameof(ProjectPath));
                 }
             }
         }
