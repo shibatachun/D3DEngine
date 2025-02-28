@@ -13,6 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="envdte" Version="17.13.40008" />
+    <PackageReference Include="envdte80" Version="17.13.40008" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.6.1" />
   </ItemGroup>
 
