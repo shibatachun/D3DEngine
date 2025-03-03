@@ -55,7 +55,8 @@
 
                 </Button.Content>
             </Button>
-        </StackPanel>
+            <Button Content="New Script" Margin="32,0,0,0" Click="OnNewSCript_Button_Click"/>
+        </StackPanel> 
 
         <!--<Grid Grid.Row="1">
             <xcad:DockingManager x:Name="DockManager"  >

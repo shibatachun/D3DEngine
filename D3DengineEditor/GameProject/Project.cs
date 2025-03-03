@@ -1,4 +1,5 @@
-﻿using D3DengineEditor.Utilities;
+﻿using D3DengineEditor.GameDev;
+using D3DengineEditor.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,7 +27,9 @@ namespace D3DengineEditor.GameProject
         [DataMember]
         public string Path { get; private set; }                                    //路径
 
-        public string FullPath => $@"{Path}{Name}\{Name}{Extension}";               //Project.dde文件的路径
+        public string FullPath => $@"{Path}{Name}{Name}{Extension}";               //Project.dde文件的路径
+
+        public string Solution => $@"{Path}{Name}.sln";
 
         //新建一个序列化的分类
         [DataMember(Name = "Scenes")]
@@ -60,7 +63,10 @@ namespace D3DengineEditor.GameProject
         public ICommand RedoCommand { get; private set; }
         public ICommand AddSceneCommand {  get; private set; }
         public ICommand RemoveSceneCommand { get; private set; } 
-        public ICommand SaveCommand { get; private set; } 
+        public ICommand SaveCommand { get; private set; }
+     
+
+
         private void AddScene(string sceneName)
         {
             Debug.Assert(!string.IsNullOrEmpty(sceneName.Trim()));
@@ -80,6 +86,7 @@ namespace D3DengineEditor.GameProject
         //当前project unload也就是说退出当前Project是，重设undoredo的list
         public void Unload()
         {
+            VisualStudio.CloseVisualStudio();
             UndoRedo.Reset();
         }
 

@@ -197,7 +197,7 @@ namespace D3DengineEditor.GameProject
                 //获得project.dde
                 var projectXml = File.ReadAllText(template.ProjectFilePath);
                 //在项目文件中有{0} {1}等站位服会被Format()函数里的projectName和projectpath替代
-                projectXml = string.Format(projectXml, ProjectName, ProjectPath);
+                projectXml = string.Format(projectXml, ProjectName, path);
 
                 //新的projectPth路径
                 var projectPath = Path.GetFullPath(Path.Combine(path,$"{ProjectName}{Project.Extension}"));
@@ -256,16 +256,18 @@ namespace D3DengineEditor.GameProject
                 {
                     //通过反序列化获得数据，类型是ProjectTemplate类型,这里就返回了一个projectTemplate类型的实例
                     var template = Serializer.FromFile<ProjectTemplate>(file);
-                    //绑定这个template里的Icon
-                    template.IconFilePath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(file), "Icon.png"));
-                    template.Icon = File.ReadAllBytes(template.IconFilePath);
-                    //绑定这个template里的screenshot
-                    template.ScreenshotFilePath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(file), "Screenshot.png"));
-                    template.Screenshot = File.ReadAllBytes(template.ScreenshotFilePath);
-                    //获得这个template里的project file的full path
-                    template.ProjectFilePath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(file), template.ProjectFile));
 
                     template.TemplatePath = Path.GetDirectoryName(file);
+                    //绑定这个template里的Icon
+                    template.IconFilePath = Path.GetFullPath(Path.Combine(template.TemplatePath, "Icon.png"));
+                    template.Icon = File.ReadAllBytes(template.IconFilePath);
+                    //绑定这个template里的screenshot
+                    template.ScreenshotFilePath = Path.GetFullPath(Path.Combine(template.TemplatePath, "Screenshot.png"));
+                    template.Screenshot = File.ReadAllBytes(template.ScreenshotFilePath);
+                    //获得这个template里的project file的full path
+                    
+                    template.ProjectFilePath = Path.GetFullPath(Path.Combine(template.TemplatePath, template.ProjectFile));
+
                     //把这个template project的实例添加到observable collection里，以备在view中进行展示,因为序列化的过程中没有把这些文件的path写进去
                     _projectTemplates.Add(template);
                 }

@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
@@ -87,6 +88,48 @@ namespace D3DengineEditor.GameDev
                 _vsInstance.Solution.Close(true);
             }
             _vsInstance?.Quit();
+        }
+
+        internal static bool AddFilesToSolution(string solution, string projectName, string[] files)
+        {
+            OpenVisualStudio(solution);
+            try
+            {
+                if (_vsInstance != null)
+                {
+                    if (_vsInstance != null)
+                    {
+                        if (!_vsInstance.Solution.IsOpen) _vsInstance.Solution.Open(solution);
+                        else _vsInstance.ExecuteCommand("File.SaveAll");
+                    }
+
+                    foreach (EnvDTE.Project project in _vsInstance.Solution.Projects)
+                    {
+                        if (project.UniqueName.Contains(projectName))
+                        {
+                            foreach (var file in files)
+                            {
+                                project.ProjectItems.AddFromFile(file);
+                            }
+                        }
+                    }
+                    var cpp = files.FirstOrDefault(x => Path.GetExtension(x) == ".cpp");
+                    if (!string.IsNullOrEmpty(cpp))
+                    {
+                        _vsInstance.ItemOperations.OpenFile(cpp, EnvDTE.Constants.vsViewKindTextView).Visible = true;
+
+                    }
+                    _vsInstance.MainWindow.Activate();
+                    _vsInstance.MainWindow.Visible = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine("Failed to add files to Visual Studio project");
+                return false ;
+            }
+            return true ;
         }
     }
 }

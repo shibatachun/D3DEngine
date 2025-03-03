@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using D3DengineEditor.GameDev;
 using D3DengineEditor.GameProject;
 using D3DengineEditor.Utilities;
 using Xceed.Wpf.Toolkit;
@@ -47,6 +48,12 @@ namespace D3DengineEditor.Editors
 
         }
 
+        private void OnNewSCript_Button_Click(object sender, RoutedEventArgs e)
+        {
+            new NewScriptDialog().ShowDialog();
+          
+        }
+
         //private void SaveToLayout(object sender, RoutedEventArgs e)
         //{
         //    Unloaded -= SaveToLayout;
@@ -62,14 +69,14 @@ namespace D3DengineEditor.Editors
         //    if(File.Exists("layout.xml"))
         //    {
         //        Console.WriteLine(Path.GetFullPath("layout.xml"));
-               
+
         //        using (var stream = new StreamReader("layout.xml"))
 
         //        {
         //            var layoutSerializer = new Xceed.Wpf.AvalonDock.Layout.Serialization.XmlLayoutSerializer(DockManager);
         //            layoutSerializer.LayoutSerializationCallback += (s, args) =>
         //            {
-                       
+
         //            };
         //            layoutSerializer.Deserialize(stream);
         //        }
