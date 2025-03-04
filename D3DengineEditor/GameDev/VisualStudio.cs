@@ -84,7 +84,7 @@ namespace D3DengineEditor.GameDev
         {
             if(_vsInstance?.Solution.IsOpen == true)
             {
-                _vsInstance.ExecuteCommand("File.SavaAll");
+                _vsInstance.ExecuteCommand("File.SaveAll");
                 _vsInstance.Solution.Close(true);
             }
             _vsInstance?.Quit();

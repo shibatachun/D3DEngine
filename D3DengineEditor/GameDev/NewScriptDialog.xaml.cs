@@ -14,6 +14,7 @@ using System.IO;
 using D3DengineEditor.GameProject;
 using System.Diagnostics;
 using D3DengineEditor.Utilities;
+using System.Windows.Media.Animation;
 
 
 
@@ -135,7 +136,12 @@ namespace D3DengineEditor.GameDev
         private async void OnCreate_Button_Click(object sender, RoutedEventArgs e)
         {
             if (!Validate()) return;
+
             IsEnabled = false;
+            busyAnimation.Opacity = 0;
+            busyAnimation.Visibility = Visibility.Visible;
+            DoubleAnimation fadeIn = new DoubleAnimation(0,1,new Duration(TimeSpan.FromMilliseconds(500)));
+            busyAnimation.BeginAnimation(OpacityProperty, fadeIn);
 
             try
             {
@@ -152,7 +158,14 @@ namespace D3DengineEditor.GameDev
             }
             finally
             {
-                IsEnabled = true;
+                DoubleAnimation fadeOut = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromMilliseconds(500)));
+                fadeOut.Completed += (s, e) =>
+                {
+                    busyAnimation.Opacity = 0;
+                    busyAnimation.Visibility = Visibility.Visible;
+                    Close();
+                };
+                busyAnimation.BeginAnimation(OpacityProperty, fadeOut);
             }
             
         }
