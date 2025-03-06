@@ -79,16 +79,16 @@ new_generation(id_type id)
 			id_type _id;
 		};
 	}
-	//这个宏为 name 定义了一个类型安全的 ID 结构体，继承自 id::internal::id_base
+	//这个宏为 name 定义了一个类型安全的 ID 结构体，继承自 id::internal::id_basew
 #define DEFINE_TYPED_ID(name)									\
-		struct name final : id::detail::id_base				\
+		struct name final : id::detail::id_base					\
 		{														\
 			constexpr explicit name(id::id_type id)				\
 				:id_base{ id } {}								\
 			constexpr name() : id_base{0}{}						\
-		};
+		};														
 #else
-#define DEFINE_TYPED_ID(name) using name = id:id_type;
+#define DEFINE_TYPED_ID(name) using name = d3d::id::id_type;
 #endif
 
 }

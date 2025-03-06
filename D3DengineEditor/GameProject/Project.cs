@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Security.RightsManagement;
@@ -16,6 +17,14 @@ using System.Windows.Input;
 
 namespace D3DengineEditor.GameProject
 {
+
+    enum BuildConfiguration
+    {
+        Debug,
+        DebugEditor,
+        Release,
+        ReleaseEditor,
+    }
     [DataContract(Name = "Game")]
     //Project类，总的一个大类，囊括整个project,因为需要序列化到文件中，所以需要DataContract
     class Project : ViewModelBase
@@ -30,6 +39,29 @@ namespace D3DengineEditor.GameProject
         public string FullPath => $@"{Path}{Name}{Name}{Extension}";               //Project.dde文件的路径
 
         public string Solution => $@"{Path}{Name}.sln";
+
+        private static readonly string[] _buildConfigurationNames = new string[] {
+        "Debug",
+        "DebugEditor",
+        "Release",
+        "ReleaseEditor"};
+        private int _buildConfig;
+        [DataMember]
+        public int BuildConfig
+        {
+            get => _buildConfig;
+            set
+            {
+                if(_buildConfig != value)
+                {
+                    _buildConfig = value;
+                    OnPropertyChanged(nameof(BuildConfig)); 
+                }    
+            }
+        }
+
+        public BuildConfiguration StandAloneBuildConfig => BuildConfig ==0 ? BuildConfiguration.Debug :　BuildConfiguration.Release;
+        public BuildConfiguration DllBuildConfig => BuildConfig ==0 ? BuildConfiguration.DebugEditor :　BuildConfiguration.ReleaseEditor;
 
         //新建一个序列化的分类
         [DataMember(Name = "Scenes")]
@@ -64,8 +96,10 @@ namespace D3DengineEditor.GameProject
         public ICommand AddSceneCommand {  get; private set; }
         public ICommand RemoveSceneCommand { get; private set; } 
         public ICommand SaveCommand { get; private set; }
-     
 
+        public ICommand BuildCommand { get; private set; }  
+     
+        private static string GetConfigurationName(BuildConfiguration config) => _buildConfigurationNames[(int)config];
 
         private void AddScene(string sceneName)
         {
@@ -129,10 +163,44 @@ namespace D3DengineEditor.GameProject
                     () => RemoveScene(x),
                     $"Remove {x.Name}"));
             }, x=>!x.IsActive);
-            UndoCommand = new RelayCommand<object>(x => UndoRedo.Undo());
-            RedoCommand = new RelayCommand<object>(x => UndoRedo.Redo());
+            UndoCommand = new RelayCommand<object>(x => UndoRedo.Undo(), x=> UndoRedo.UndoList.Any());
+            RedoCommand = new RelayCommand<object>(x => UndoRedo.Redo(), x => UndoRedo.RedoList.Any());
             SaveCommand = new RelayCommand<object>(x => Save(this));
+            BuildCommand = new RelayCommand<bool>(x => BuildGameCodeDll(x), x => !VisualStudio.IsDebugging() && VisualStudio.BuildDone);
         }
+
+        private void BuildGameCodeDll(bool showWindow = true)
+        {
+            try
+            {
+
+                UnloadeGameCodeDll();
+                //编译游戏代码
+                VisualStudio.BuildSolution(this, GetConfigurationName(DllBuildConfig), showWindow);
+                if (VisualStudio.BuildSucceeded)
+                {
+                    LoadGameCodeDll();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw;
+            }
+
+             
+        }
+
+        private void LoadGameCodeDll()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void UnloadeGameCodeDll()
+        {
+            throw new NotImplementedException();
+        }
+
         public Project(string name, string path)
         {
             Name = name; 

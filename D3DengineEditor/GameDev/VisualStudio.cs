@@ -1,4 +1,5 @@
-﻿using D3DengineEditor.Utilities;
+﻿using D3DengineEditor.GameProject;
+using D3DengineEditor.Utilities;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,9 @@ namespace D3DengineEditor.GameDev
     {
         private static EnvDTE80.DTE2 _vsInstance = null;
         private static readonly string _progID = "VisualStudio.DTE.17.0";
+
+        public static bool BuildSucceeded { get; private set; } = true;
+        public static bool BuildDone { get; private set; } = true;
 
         [DllImport("ole32.dll")]
         private static extern int CreateBindCtx(uint reserved, out IBindCtx ppbc);
@@ -130,6 +134,75 @@ namespace D3DengineEditor.GameDev
                 return false ;
             }
             return true ;
+        }
+
+        public static void BuildSolution(Project project, string configName, bool showWindow = true)
+        {
+            if(IsDebugging())
+            {
+                Logger.Log(MessageType.Error, "Visual Studio is currenty running a process.");
+                return ;
+            }
+            OpenVisualStudio(project.Solution);
+            BuildDone = BuildSucceeded = false;
+            for (int i = 0; i < 3; i++)
+            {
+
+
+               
+            
+                try
+                {
+                    if (!_vsInstance.Solution.IsOpen) _vsInstance.Solution.Open(project.Solution);
+                    _vsInstance.MainWindow.Visible = showWindow;
+
+                    _vsInstance.Events.BuildEvents.OnBuildProjConfigBegin += OnBuilddSolutionBegin; 
+                    _vsInstance.Events.BuildEvents.OnBuildProjConfigDone += OnBuilddSolutionDone; 
+                    _vsInstance.Solution.SolutionBuild.SolutionConfigurations.Item(configName).Activate();
+                    _vsInstance.ExecuteCommand("Build.BuildSolution");
+
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    Debug.WriteLine($"Attempt {i}: failed to build {project.Name}");
+                    System.Threading.Thread.Sleep(1000);
+                }
+            }
+
+        }
+        private static void OnBuilddSolutionBegin(string project, string projectConfig, string platform, string solutionConfig)
+        {
+            Logger.Log(MessageType.Info, $"Building {project}, {projectConfig},{platform},{solutionConfig}");
+        }
+        private static void OnBuilddSolutionDone(string project, string projectConfig, string platform, string solutionConfig, bool success)
+        {
+            if (BuildDone) return;
+
+            if (success) Logger.Log(MessageType.Info, $"Building {projectConfig} configuration succeeded");
+            else Logger.Log(MessageType.Error, $"Building {projectConfig} configuration failed");
+
+            BuildDone = true;
+            BuildSucceeded = success;
+        }
+
+        
+
+        public static bool IsDebugging()
+        {
+            bool result = false ;
+            for(int i = 0; i<3;i++)
+            try
+            {
+                result = _vsInstance != null &&
+                    (_vsInstance.Debugger.CurrentProgram != null || _vsInstance.Debugger.CurrentMode == EnvDTE.dbgDebugMode.dbgRunMode);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                if(!result) System.Threading.Thread.Sleep(1000);
+            }
+            return result ;
         }
     }
 }

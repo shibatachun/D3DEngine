@@ -5,6 +5,7 @@
 namespace d3d::script {
 
 DEFINE_TYPED_ID(script_id);
+
 class component final
 {
 public:

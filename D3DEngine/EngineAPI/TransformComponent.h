@@ -2,9 +2,15 @@
 
 #include "../Components/ComponentsCommon.h"
 
+#define STRINGIFY(x) #x
+
+
 namespace d3d::transform {
 
+
+
 DEFINE_TYPED_ID(transform_id);
+//using transform_id = id::id_type;
 class component final
 {
 public:

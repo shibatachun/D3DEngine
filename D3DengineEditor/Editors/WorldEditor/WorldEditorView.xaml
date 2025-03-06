@@ -6,12 +6,14 @@
              xmlns:local="clr-namespace:D3DengineEditor.Editors"
              xmlns:utl="clr-namespace:D3DengineEditor.Utilities"
              xmlns:ctlr="clr-namespace:D3DengineEditor.Utilities.Controls"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"  Focusable="True"
              d:DesignHeight="1080" d:DesignWidth="1920">
     <!--xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"-->
     <UserControl.Resources>
-
+        <sys:Boolean x:Key="True">True</sys:Boolean>
+        <sys:Boolean x:Key="False">False</sys:Boolean>
     </UserControl.Resources>
     <UserControl.InputBindings>
         <KeyBinding Command="{Binding UndoCommand}" Key="Z" Modifiers="Ctrl"/>
@@ -56,6 +58,12 @@
                 </Button.Content>
             </Button>
             <Button Content="New Script" Margin="32,0,0,0" Click="OnNewSCript_Button_Click"/>
+            <Button x:Name="buildButton" Content="Build" Margin="32,0,0,0" Command="{Binding BuildCommand}" CommandParameter="True"/>
+            <ComboBox x:Name="runConfig" VerticalAlignment="Center" Margin="10,0"
+                      Width="72">
+                <ComboBoxItem Content="Debug"/>
+                <ComboBoxItem Content="Release"/> 
+            </ComboBox>
         </StackPanel> 
 
         <!--<Grid Grid.Row="1">
