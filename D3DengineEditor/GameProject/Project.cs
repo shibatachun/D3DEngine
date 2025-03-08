@@ -36,7 +36,7 @@ namespace D3DengineEditor.GameProject
         [DataMember]
         public string Path { get; private set; }                                    //路径
 
-        public string FullPath => $@"{Path}{Name}{Name}{Extension}";               //Project.dde文件的路径
+        public string FullPath => $@"{Path}{Name}{Extension}";               //Project.dde文件的路径
 
         public string Solution => $@"{Path}{Name}.sln";
 
@@ -193,12 +193,12 @@ namespace D3DengineEditor.GameProject
 
         private void LoadGameCodeDll()
         {
-            throw new NotImplementedException();
+           
         }
 
         private void UnloadeGameCodeDll()
         {
-            throw new NotImplementedException();
+            
         }
 
         public Project(string name, string path)

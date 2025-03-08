@@ -148,18 +148,19 @@ namespace D3DengineEditor.GameDev
             for (int i = 0; i < 3; i++)
             {
 
-
-               
-            
                 try
                 {
                     if (!_vsInstance.Solution.IsOpen) _vsInstance.Solution.Open(project.Solution);
                     _vsInstance.MainWindow.Visible = showWindow;
-
-                    _vsInstance.Events.BuildEvents.OnBuildProjConfigBegin += OnBuilddSolutionBegin; 
-                    _vsInstance.Events.BuildEvents.OnBuildProjConfigDone += OnBuilddSolutionDone; 
+                    if (BuildSucceeded)
+                    {
+                        break;
+                    }
+                    _vsInstance.Events.BuildEvents.OnBuildProjConfigBegin += OnBuildSolutionBegin; 
+                    _vsInstance.Events.BuildEvents.OnBuildProjConfigDone += OnBuildSolutionDone; 
                     _vsInstance.Solution.SolutionBuild.SolutionConfigurations.Item(configName).Activate();
                     _vsInstance.ExecuteCommand("Build.BuildSolution");
+                  
 
                 }
                 catch (Exception ex)
@@ -171,11 +172,11 @@ namespace D3DengineEditor.GameDev
             }
 
         }
-        private static void OnBuilddSolutionBegin(string project, string projectConfig, string platform, string solutionConfig)
+        private static void OnBuildSolutionBegin(string project, string projectConfig, string platform, string solutionConfig)
         {
             Logger.Log(MessageType.Info, $"Building {project}, {projectConfig},{platform},{solutionConfig}");
         }
-        private static void OnBuilddSolutionDone(string project, string projectConfig, string platform, string solutionConfig, bool success)
+        private static void OnBuildSolutionDone(string project, string projectConfig, string platform, string solutionConfig, bool success)
         {
             if (BuildDone) return;
 
