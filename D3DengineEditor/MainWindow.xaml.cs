@@ -23,7 +23,7 @@ namespace D3DengineEditor
     public partial class MainWindow : Window
     {
 
-        public static string D3DPath { get; private set; } = @"E:\Schoolwork\D3Dengine\D3DEngine";
+        public static string D3DPath { get; private set; }
         //开始加载组件
         public MainWindow()
         {

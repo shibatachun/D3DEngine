@@ -2,6 +2,7 @@
 #define EDITOR_INTERFACE extern "C" __declspec(dllexport)
 #endif // !EDITOR_INTERFACE
 
+#include "Common.h" 
 #include "CommonHeaders.h"
 #include "Id.h"
 #include "..\D3DEngine\Components\Entity.h"

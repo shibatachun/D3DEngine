@@ -157,7 +157,21 @@ namespace D3DengineEditor.GameDev
                         break;
                     }
                     _vsInstance.Events.BuildEvents.OnBuildProjConfigBegin += OnBuildSolutionBegin; 
-                    _vsInstance.Events.BuildEvents.OnBuildProjConfigDone += OnBuildSolutionDone; 
+                    _vsInstance.Events.BuildEvents.OnBuildProjConfigDone += OnBuildSolutionDone;
+
+                    try
+                    {
+                        foreach (var pdbFile in Directory.GetFiles(Path.Combine($"{project.Path}", $@"x64\{configName}"), "*.pdb"))
+                        {
+                            File.Delete(pdbFile);
+
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message );
+                    }
+                   
                     _vsInstance.Solution.SolutionBuild.SolutionConfigurations.Item(configName).Activate();
                     _vsInstance.ExecuteCommand("Build.BuildSolution");
                   

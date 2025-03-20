@@ -1,4 +1,5 @@
-﻿using D3DengineEditor.GameDev;
+﻿using D3DengineEditor.DLLWrapper;
+using D3DengineEditor.GameDev;
 using D3DengineEditor.Utilities;
 using System;
 using System.Collections.Generic;
@@ -98,6 +99,44 @@ namespace D3DengineEditor.GameProject
         public ICommand SaveCommand { get; private set; }
 
         public ICommand BuildCommand { get; private set; }  
+
+        private void SetCommnads()
+        {
+            AddSceneCommand = new RelayCommand<object>(x =>
+            {
+                Console.WriteLine("添加了");
+                AddScene($"New Scene {_scenes.Count}");
+                var newScene = _scenes.Last();
+                var sceneIndex = _scenes.Count - 1;
+                UndoRedo.Add(new UndoRedoAction(
+                    () => RemoveScene(newScene),
+                    () => _scenes.Insert(sceneIndex, newScene),
+                    $"Add {newScene.Name}"));
+            });
+
+            RemoveSceneCommand = new RelayCommand<Scene>(x =>
+            {
+
+                Console.WriteLine("删除了");
+                var sceneIndex = _scenes.IndexOf(x);
+                RemoveScene(x);
+                UndoRedo.Add(new UndoRedoAction(
+                    () => _scenes.Insert(sceneIndex, x),
+                    () => RemoveScene(x),
+                    $"Remove {x.Name}"));
+            }, x => !x.IsActive);
+            UndoCommand = new RelayCommand<object>(x => UndoRedo.Undo(), x => UndoRedo.UndoList.Any());
+            RedoCommand = new RelayCommand<object>(x => UndoRedo.Redo(), x => UndoRedo.RedoList.Any());
+            SaveCommand = new RelayCommand<object>(x => Save(this));
+            BuildCommand = new RelayCommand<bool>(async x => await BuildGameCodeDll(x), x => !VisualStudio.IsDebugging() && VisualStudio.BuildDone);
+
+            OnPropertyChanged(nameof(AddSceneCommand));
+            OnPropertyChanged(nameof(RemoveSceneCommand));
+            OnPropertyChanged(nameof(UndoCommand));
+            OnPropertyChanged(nameof(RedoCommand));
+            OnPropertyChanged(nameof(SaveCommand));
+            OnPropertyChanged(nameof(BuildCommand));
+        }
      
         private static string GetConfigurationName(BuildConfiguration config) => _buildConfigurationNames[(int)config];
 
@@ -131,7 +170,7 @@ namespace D3DengineEditor.GameProject
         }
 
         [OnDeserialized]
-        private void OnDeserialized(StreamingContext context)
+        private async void OnDeserialized(StreamingContext context)
         {
             if(_scenes !=null)
             {
@@ -140,43 +179,19 @@ namespace D3DengineEditor.GameProject
             }
             ActiveScene = Scenes.FirstOrDefault(x => x.IsActive);
 
-            AddSceneCommand = new RelayCommand<object>(x =>
-            {
-                Console.WriteLine("添加了");
-                AddScene($"New Scene {_scenes.Count}");
-                var newScene =  _scenes.Last();
-                var sceneIndex = _scenes.Count - 1;
-                UndoRedo.Add(new UndoRedoAction(
-                    () => RemoveScene(newScene),
-                    () => _scenes.Insert(sceneIndex, newScene),
-                    $"Add {newScene.Name}"));
-            });
-
-            RemoveSceneCommand = new RelayCommand<Scene>(x =>
-            {
-
-                Console.WriteLine("删除了");
-                var sceneIndex = _scenes.IndexOf(x);
-                RemoveScene(x);
-                UndoRedo.Add(new UndoRedoAction(
-                    () => _scenes.Insert(sceneIndex, x),
-                    () => RemoveScene(x),
-                    $"Remove {x.Name}"));
-            }, x=>!x.IsActive);
-            UndoCommand = new RelayCommand<object>(x => UndoRedo.Undo(), x=> UndoRedo.UndoList.Any());
-            RedoCommand = new RelayCommand<object>(x => UndoRedo.Redo(), x => UndoRedo.RedoList.Any());
-            SaveCommand = new RelayCommand<object>(x => Save(this));
-            BuildCommand = new RelayCommand<bool>(x => BuildGameCodeDll(x), x => !VisualStudio.IsDebugging() && VisualStudio.BuildDone);
+            await BuildGameCodeDll(false);
+            SetCommnads();
+         
         }
 
-        private void BuildGameCodeDll(bool showWindow = true)
+        private async Task BuildGameCodeDll(bool showWindow = true)
         {
             try
             {
 
                 UnloadeGameCodeDll();
                 //编译游戏代码
-                VisualStudio.BuildSolution(this, GetConfigurationName(DllBuildConfig), showWindow);
+                await Task.Run(()=>VisualStudio.BuildSolution(this, GetConfigurationName(DllBuildConfig), showWindow));
                 if (VisualStudio.BuildSucceeded)
                 {
                     LoadGameCodeDll();
@@ -193,12 +208,24 @@ namespace D3DengineEditor.GameProject
 
         private void LoadGameCodeDll()
         {
-           
+           var configName = GetConfigurationName(DllBuildConfig);
+            var dll = $@"{Path}x64\{configName}\{Name}.dll";
+            if(File.Exists(dll) && EngineAPI.LoadGameCodeDll(dll)!=0)
+            {
+                Logger.Log(MessageType.Info, "Game code DLL loaded successfully");
+            }
+            else
+            {
+                Logger.Log(MessageType.Warning, "Failed to load game code DLL file. Try to build the project first.");
+            }
         }
 
         private void UnloadeGameCodeDll()
         {
-            
+            if (EngineAPI.UnloadGameCodeDll() != 0)
+            {
+                Logger.Log(MessageType.Info, "Game code Dll unloaded");
+            }
         }
 
         public Project(string name, string path)
