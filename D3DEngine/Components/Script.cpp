@@ -17,6 +17,14 @@ namespace d3d::script {
 			static script_registry reg;
 			return reg;
 		}
+#ifdef USE_WITH_EDITOR
+		utl::vector<std::string>& script_names()
+		{
+			static utl::vector<std::string> names;
+			return names;
+		}
+			
+#endif
 		
 		bool exists(script_id id)
 		{
@@ -41,6 +49,22 @@ namespace d3d::script {
 			assert(result);
 			return result;
 		}
+
+		script_creator get_script_creator(size_t tag)
+		{
+			auto script = d3d::script::registery().find(tag);
+			assert(script != d3d::script::registery().end() && script->first == tag);
+			return script->second;
+		}
+
+#ifdef USE_WITH_EDITOR
+		u8 add_script_name(const char* name)
+		{
+			script_names().emplace_back(name);
+			return true;
+		}
+#endif // USE_WITH_EDITOR
+
 
 	}// namespace detail
 
@@ -99,3 +123,20 @@ namespace d3d::script {
 	}
 
 }
+
+#ifdef USE_WITH_EDITOR
+#include <atlsafe.h>
+extern "C" __declspec(dllexport)
+LPSAFEARRAY get_script_names()
+{
+	const u32 size{ (u32)d3d::script::script_names().size() };
+	if (!size) return nullptr;
+	CComSafeArray<BSTR> names(size);
+	for (u32 i{ 0 }; i < size; ++i)
+	{
+		names.SetAt(i, A2BSTR_EX(d3d::script::script_names()[i].c_str()), false);
+	}
+	return names.Detach();
+}
+#endif // USE_WITH_EDITOR
+

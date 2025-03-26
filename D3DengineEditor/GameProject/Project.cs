@@ -64,6 +64,19 @@ namespace D3DengineEditor.GameProject
         public BuildConfiguration StandAloneBuildConfig => BuildConfig ==0 ? BuildConfiguration.Debug :　BuildConfiguration.Release;
         public BuildConfiguration DllBuildConfig => BuildConfig ==0 ? BuildConfiguration.DebugEditor :　BuildConfiguration.ReleaseEditor;
 
+        private string[] _availableScripts;
+        public string[] AvailableScripts
+        {
+            get => _availableScripts;
+            set
+            {
+                if(_availableScripts != value)
+                {
+                    _availableScripts = value;
+                    OnPropertyChanged(nameof(AvailableScripts));
+                }
+            }
+        }
         //新建一个序列化的分类
         [DataMember(Name = "Scenes")]
         //使用ObservableCollection是因为需要显示在打开project的界面中，往后的组件等同理
@@ -210,8 +223,10 @@ namespace D3DengineEditor.GameProject
         {
            var configName = GetConfigurationName(DllBuildConfig);
             var dll = $@"{Path}x64\{configName}\{Name}.dll";
+            AvailableScripts= null;
             if(File.Exists(dll) && EngineAPI.LoadGameCodeDll(dll)!=0)
             {
+                AvailableScripts = EngineAPI.GetScriptNames();
                 Logger.Log(MessageType.Info, "Game code DLL loaded successfully");
             }
             else

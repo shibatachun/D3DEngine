@@ -16,6 +16,7 @@ namespace D3DengineEditor.Components
 {
     [DataContract]
     [KnownType(typeof(Transform))]
+    [KnownType(typeof(Script))]
      class GameEntity : ViewModelBase
     {
 
@@ -97,7 +98,30 @@ namespace D3DengineEditor.Components
         public T GetComponent<T>() where T : Component => GetComponent(typeof(T)) as T;
 
 
-
+        public bool AddComponent(Component component)
+        {
+            Debug.Assert(component != null);
+            if (!Components.Any(x => x.GetType() == component.GetType()))
+            {
+                IsActive = false;
+                _components.Add(component);
+                IsActive = true;
+                return true;
+            }
+            Logger.Log(MessageType.Warning, $"Entity {Name} is already has a {component.GetType().Name} component.");
+            return false;
+        }
+          public void RemoveComponent(Component component)
+        {
+            Debug.Assert(component != null);
+            if (component is Transform) return;
+            if (_components.Contains(component)) {
+                IsActive = false;
+                _components.Remove(component);
+                IsActive=true;
+            
+            }
+        }
 
         [OnDeserialized]
         void OnDeserialized(StreamingContext context)

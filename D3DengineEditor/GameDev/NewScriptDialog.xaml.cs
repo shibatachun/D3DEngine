@@ -43,11 +43,6 @@ namespace D3DengineEditor.GameDev
         #include<string>
 
         namespace {1} {{
-
-	        
-
-	
-
 	        class {0} : public d3d::script::entity_script
 	        {{
 	            public:

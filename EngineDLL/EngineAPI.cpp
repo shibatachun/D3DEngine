@@ -1,71 +1,56 @@
-#ifndef EDITOR_INTERFACE
-#define EDITOR_INTERFACE extern "C" __declspec(dllexport)
-#endif // !EDITOR_INTERFACE
 
-#include "Common.h" 
+#include "Common.h"
 #include "CommonHeaders.h"
-#include "Id.h"
-#include "..\D3DEngine\Components\Entity.h"
-#include "..\D3DEngine\Components\Transform.h"
+#include "..\D3DEngine\Components\Script.h"
+
+
+#ifndef WIN32_MEAN_AND_LEAN
+#define WIN32_MEAN_AND_LEAN
+#endif // !WIN32_MEAN_AND_LEAN
+
+#include <Windows.h>
 
 using namespace d3d;
 namespace {
-	//这里需要对应的transform component来对应C#中传过来的来的数据，然后再进行数据转换，因为在引擎内部处理是使用四元数来进行转换的
-struct transform_component
-{
-	//三个传过来的数
-	f32 position[3];
-	f32 rotation[3];
-	f32 scale[3];
-	transform::init_info to_init_info()
-	{
-		//使用DirectX的数学库进行计算
-		using namespace DirectX;
-		
-		transform::init_info info{};
-		memcpy(&info.position[0], &position[0], sizeof(f32) * _countof(position));
-		memcpy(&info.scale[0], &scale[0], sizeof(f32) * _countof(scale));
-		XMFLOAT3A rot{ &rotation[0] };
+	HMODULE game_code_dll{ nullptr };
 
-		XMVECTOR quat{ XMQuaternionRotationRollPitchYawFromVector(XMLoadFloat3A(&rot)) };
-		XMFLOAT4A rot_quat{};
-		//从simd registerd邪道rot_quat的stack中去
-		XMStoreFloat4A(&rot_quat, quat);
-
-		memcpy(&info.rotation[0], &rot_quat.x, sizeof(f32) * _countof(info.rotation));
-		return info;
-	}
-};
-
-struct game_entity_descriptor
-{
-	transform_component transform;
-};
-
-game_entity::entity 
-entity_from_id(id::id_type id)
-{
-	return game_entity::entity{ game_entity::entity_id{id} };
+	using _get_script_creator = d3d::script::detail::script_creator(*)(size_t);
+	_get_script_creator get_script_creator{ nullptr };
+	using _get_script_names = LPSAFEARRAY(*)(void);
+	_get_script_names get_script_names{ nullptr };
 }
+EDITOR_INTERFACE u32
+LoadGameCodeDll(const char* dll_path)
+{
+	if (game_code_dll) return 0;
+	game_code_dll = LoadLibraryA(dll_path);
+	assert(game_code_dll);
+
+	get_script_creator = (_get_script_creator)GetProcAddress(game_code_dll, "get_script_creator");
+	get_script_names = (_get_script_names)GetProcAddress(game_code_dll, "get_script_names");
+	return (game_code_dll && get_script_creator && get_script_names) ? TRUE : FALSE;
 }
 
-EDITOR_INTERFACE id::id_type
-CreateGameEntity(game_entity_descriptor* e)
+EDITOR_INTERFACE u32
+UnloadGameCodeDll()
 {
-	assert(e);
-	game_entity_descriptor& desc{ *e };
-	transform::init_info transform_info{ desc.transform.to_init_info() };
-	game_entity::entity_info entity_info
-	{
-		&transform_info,
-
-	};
-	return game_entity::create(entity_info).get_id();
+	if (!game_code_dll) return FALSE;
+	assert(game_code_dll);
+	int result{ FreeLibrary(game_code_dll) };
+	assert(result);
+	game_code_dll = nullptr;
+	return TRUE;
 }
 
-EDITOR_INTERFACE void
-RemoveGameEntity(id::id_type id)
+EDITOR_INTERFACE script::detail::script_creator
+GetScriptCreator(const char* name)
 {
-	assert(id::is_valid(id));
-	game_entity::remove(game_entity::entity_id{ id });
+	return (game_code_dll && get_script_creator) ? get_script_creator(script::detail::string_hash()(name)) : nullptr;
+}
+
+EDITOR_INTERFACE LPSAFEARRAY
+GetScriptNames()
+{
+	auto names = (game_code_dll && get_script_names) ? get_script_names() : nullptr;
+	return names;
 }
