@@ -14,9 +14,6 @@
     <Platforms>x64</Platforms>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Include="Components\ComponentFactory.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="envdte" Version="17.13.40008" />
@@ -25,3 +22,4 @@
   </ItemGroup>
 
 </Project>
+ 

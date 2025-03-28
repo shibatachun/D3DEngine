@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using D3DengineEditor.Components;
 using D3DengineEditor.EngineAPIStructs;
+using D3DengineEditor.GameProject;
+using D3DengineEditor.Utilities;
 
 namespace D3DengineEditor.EngineAPIStructs
 {
@@ -61,7 +63,19 @@ namespace D3DengineEditor.DLLWrapper
                 }
                 //script component
                 {
-                    //var c = entity.GetComponent<Script>();
+                    //我们需要确认现在的Project是否不为空号，来确定game code 的dll是否被加载， 这样可以确保让创建游戏实体在游戏dll加载之后再创建
+                    var c = entity.GetComponent<Script>();
+                    if(c != null && Project.Current != null)
+                    {
+                        if(Project.Current.AvailableScripts.Contains(c.Name))
+                        {
+                            desc.Script.ScriptCreator = GetScriptCreator(c.Name);
+                        }
+                        else
+                        {
+                            Logger.Log(MessageType.Error, $"Unable to find script with name {c.Name}. Game entity will be created without script component!");
+                        }
+                    }
                 }
                 return CreateGameEntity(desc);
             }

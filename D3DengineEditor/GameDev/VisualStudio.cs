@@ -145,17 +145,14 @@ namespace D3DengineEditor.GameDev
             }
             OpenVisualStudio(project.Solution);
             BuildDone = BuildSucceeded = false;
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 3 && !BuildDone; i++)
             {
 
                 try
                 {
                     if (!_vsInstance.Solution.IsOpen) _vsInstance.Solution.Open(project.Solution);
                     _vsInstance.MainWindow.Visible = showWindow;
-                    if (BuildSucceeded)
-                    {
-                        break;
-                    }
+            
                     _vsInstance.Events.BuildEvents.OnBuildProjConfigBegin += OnBuildSolutionBegin; 
                     _vsInstance.Events.BuildEvents.OnBuildProjConfigDone += OnBuildSolutionDone;
 
@@ -206,18 +203,24 @@ namespace D3DengineEditor.GameDev
         public static bool IsDebugging()
         {
             bool result = false ;
-            for(int i = 0; i<3;i++)
-            try
+            bool tryAgain = true;
+            for (int i = 0; i < 3 && tryAgain; i++)
             {
-                result = _vsInstance != null &&
-                    (_vsInstance.Debugger.CurrentProgram != null || _vsInstance.Debugger.CurrentMode == EnvDTE.dbgDebugMode.dbgRunMode);
+
+                try
+                {
+                    result = _vsInstance != null &&
+                        (_vsInstance.Debugger.CurrentProgram != null || _vsInstance.Debugger.CurrentMode == EnvDTE.dbgDebugMode.dbgRunMode);
+                    tryAgain = false;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    System.Threading.Thread.Sleep(1000);
+                }
+                
             }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                if(!result) System.Threading.Thread.Sleep(1000);
-            }
-            return result ;
+            return result;
         }
     }
 }

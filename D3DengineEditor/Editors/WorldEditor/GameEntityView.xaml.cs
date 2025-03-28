@@ -3,6 +3,7 @@ using D3DengineEditor.GameProject;
 using D3DengineEditor.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,18 @@ using System.Windows.Shapes;
 
 namespace D3DengineEditor.Editors
 {
+    public class NullableBoolToBoolConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value is bool b && b == true;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value is bool b && b == true;
+        }
+    }
     /// <summary>
     /// Interaction logic for GameEntityView.xaml
     /// </summary>
@@ -95,23 +108,23 @@ namespace D3DengineEditor.Editors
 
         private void OnAddScriptComponent(object sender, RoutedEventArgs e)
         {
-           AddComponent(ComponentType.Script, (sender as MenuItem).Header.ToString());
+           AddComponents(ComponentType.Script, (sender as MenuItem).Header.ToString());
         }
 
-        private void AddComponent(ComponentType componentType, object data)
+        private void AddComponents(ComponentType componentType, object data)
         {
             var creationFunction = ComponentFactory.GetCreationFunction(componentType);
-            var changedEntities = new List<(GameEntity entity, Component component)>(); 
+            var changedEntities = new List<(GameEntity entity, Component component)>();
             var vm = DataContext as MSEntity;
             foreach (var entity in vm.SelectedEntities)
             {
                 var component = creationFunction(entity, data);
-                if(entity.AddComponent(component))
+                if (entity.AddComponent(component))
                 {
-                    changedEntities.Add((entity, component));   
+                    changedEntities.Add((entity, component));
                 }
             }
-            if(changedEntities.Any())
+            if (changedEntities.Any())
             {
                 vm.Refresh();
                 Project.UndoRedo.Add(new UndoRedoAction(
