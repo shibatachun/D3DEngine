@@ -45,7 +45,9 @@ namespace D3DengineEditor.GameProject
     {
         //Probably will change later
         private static readonly string _applicationDataPath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\D3DengieEditor\";
+
         private static readonly string _projectDataPath;
+
         private static readonly ObservableCollection<ProjectData> _projects = new ObservableCollection<ProjectData>();
 
         public static ReadOnlyObservableCollection<ProjectData> Projects { get; }

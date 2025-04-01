@@ -21,7 +21,6 @@ namespace D3DengineEditor.GameDev
 
         public static bool BuildSucceeded { get; private set; } = true;
         public static bool BuildDone { get; private set; } = true;
-
         [DllImport("ole32.dll")]
         private static extern int CreateBindCtx(uint reserved, out IBindCtx ppbc);
         [DllImport("ole32.dll")]
@@ -93,7 +92,6 @@ namespace D3DengineEditor.GameDev
             }
             _vsInstance?.Quit();
         }
-
         internal static bool AddFilesToSolution(string solution, string projectName, string[] files)
         {
             OpenVisualStudio(solution);
@@ -135,7 +133,6 @@ namespace D3DengineEditor.GameDev
             }
             return true ;
         }
-
         public static void BuildSolution(Project project, string configName, bool showWindow = true)
         {
             if(IsDebugging())
@@ -198,8 +195,6 @@ namespace D3DengineEditor.GameDev
             BuildSucceeded = success;
         }
 
-        
-
         public static bool IsDebugging()
         {
             bool result = false ;
@@ -222,5 +217,21 @@ namespace D3DengineEditor.GameDev
             }
             return result;
         }
+        public static void Run(Project project, string configName, bool debug)
+        {
+            if (_vsInstance != null && !IsDebugging() && BuildDone && BuildSucceeded)
+            {
+                _vsInstance.ExecuteCommand(debug ? "Debug.Start" : "Debug.StartWithoutDebugging");
+            }
+        }
+
+        public static void Stop()
+        {
+            if (_vsInstance != null && IsDebugging())
+            {
+                _vsInstance.ExecuteCommand("Debug.StopDebugging");
+            }
+        }
     }
+
 }

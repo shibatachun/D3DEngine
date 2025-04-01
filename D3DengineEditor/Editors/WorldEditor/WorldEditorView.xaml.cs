@@ -33,8 +33,6 @@ namespace D3DengineEditor.Editors
             //Unloaded += SaveToLayout;
         }
 
-      
-
         private void OnWorldEditorViewLoaded(object sender, RoutedEventArgs e)
         {
             Loaded -= OnWorldEditorViewLoaded;
