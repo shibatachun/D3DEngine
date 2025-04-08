@@ -79,7 +79,6 @@ namespace D3DengineEditor.GameProject
             _gameEntities.Remove(entity);
         }
 
-
         [OnDeserialized]
         private void OnDeserialized(StreamingContext context)
         {
