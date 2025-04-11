@@ -109,6 +109,7 @@ namespace D3DengineEditor.GameProject
         public ICommand UndoCommand {  get; private set; }
         public ICommand RedoCommand { get; private set; }
         public ICommand AddSceneCommand {  get; private set; }
+        public ICommand ActivateSceneCommand { get; private set; }  
         public ICommand RemoveSceneCommand { get; private set; } 
         public ICommand SaveCommand { get; private set; }
         public ICommand BuildCommand { get; private set; }  
@@ -141,6 +142,19 @@ namespace D3DengineEditor.GameProject
                     () => RemoveScene(x),
                     $"Remove {x.Name}"));
             }, x => !x.IsActive);
+
+            ActivateSceneCommand = new RelayCommand<Scene>(
+                x =>
+                {
+                    var sceneIndex = _scenes.IndexOf(x);
+                    var currentActiveScene = ActiveScene;
+                    ActivateScene(x);
+                    UndoRedo.Add(new UndoRedoAction(
+                        () => ActivateScene(currentActiveScene),
+                        () => ActivateScene(x),
+                        $"Activate {x.Name}"));
+                });
+
             UndoCommand = new RelayCommand<object>(x => UndoRedo.Undo(), x => UndoRedo.UndoList.Any());
             RedoCommand = new RelayCommand<object>(x => UndoRedo.Redo(), x => UndoRedo.RedoList.Any());
             SaveCommand = new RelayCommand<object>(x => Save(this));
@@ -151,6 +165,7 @@ namespace D3DengineEditor.GameProject
 
             OnPropertyChanged(nameof(AddSceneCommand));
             OnPropertyChanged(nameof(RemoveSceneCommand));
+            OnPropertyChanged(nameof(ActivateSceneCommand));
             OnPropertyChanged(nameof(UndoCommand));
             OnPropertyChanged(nameof(RedoCommand));
             OnPropertyChanged(nameof(SaveCommand));
@@ -172,6 +187,13 @@ namespace D3DengineEditor.GameProject
         {
             Debug.Assert(_scenes.Contains(scene));
             _scenes.Remove(scene);
+        }
+        private void ActivateScene(Scene scene)
+        {
+            Debug.Assert(_scenes.Contains(scene));
+            ActiveScene.IsActive = false;
+            scene.IsActive = true;
+            ActiveScene = scene;
         }
        public static Project Load(string file)
         {

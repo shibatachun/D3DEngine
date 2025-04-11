@@ -100,9 +100,9 @@ namespace D3DengineEditor.Editors
         {
              var undoAction = GetIsEnabledAction();
              var vm = DataContext as MSEntity;
-            vm.IsEnabled = (sender as CheckBox).IsChecked == true;
-            var redoAction = GetIsEnabledAction();
-            Project.UndoRedo.Add(new UndoRedoAction(undoAction, redoAction, vm.IsEnabled == true ? "Enable game entity" : "Disable game entity"));
+             vm.IsEnabled = (sender as CheckBox).IsChecked == true;
+             var redoAction = GetIsEnabledAction();
+             Project.UndoRedo.Add(new UndoRedoAction(undoAction, redoAction, vm.IsEnabled == true ? "Enable game entity" : "Disable game entity"));
 
         }
 

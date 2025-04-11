@@ -36,8 +36,13 @@
                                         <Button Content="Remove" 
                                                 Command="{Binding DataContext.RemoveSceneCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                 CommandParameter="{Binding}" Margin="20,0" Focusable="False"/>
+                                        
                                         <Button Content="+"  IsEnabled="{Binding IsActive}"
-                                                Click="OnAddGameEntity_Button_Click"/>  
+                                                Click="OnAddGameEntity_Button_Click"/>
+                                        
+                                        <Button Content="Activate" 
+                                                Command="{Binding DataContext.ActivateSceneCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                CommandParameter="{Binding}" Margin="20,0" Focusable="False"/>
                                     </StackPanel>
                                   
                                 </Grid>

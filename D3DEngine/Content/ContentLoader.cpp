@@ -6,6 +6,8 @@
 
 #if !defined(SHIPPING)
 #include <fstream>
+#include <filesystem>
+#include <Windows.h>
 namespace d3d::content
 {
 
@@ -63,6 +65,12 @@ namespace d3d::content
 	}//anonymous namespace
 	bool load_game()
 	{
+		// set the working directory to the executable
+		wchar_t path[MAX_PATH];
+		const u32 length{ GetModuleFileName(0, &path[0], MAX_PATH) };
+		if (!length || GetLastError() == ERROR_INSUFFICIENT_BUFFER) return false;
+		std::filesystem::path p{ path };
+		SetCurrentDirectory(p.parent_path().wstring().c_str());
 		// ¶ÁÈ¡game.binµÄÄÚÈÝ
 		std::ifstream game("game.bin", std::ios::in | std::ios::binary);
 		utl::vector<u8> buffer(std::istreambuf_iterator<char>(game), {});
@@ -92,12 +100,13 @@ namespace d3d::content
 		assert(at == buffer.data() + buffer.size());
 		return true;
 	}
-	void unloaded_game()
+	void unload_game()
 	{
 		for (auto entity : entities)
 		{
 			game_entity::remove(entity.get_id());
 		}
+		
 	}
 }
 #endif //!defined(SHIPPING)

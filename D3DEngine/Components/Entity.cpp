@@ -69,12 +69,8 @@ entity create(entity_info info)
 	}
 
 	return new_entity; 
-
-
 		
 }
-
-
 void remove(entity_id id)
 {
 	
@@ -90,10 +86,7 @@ void remove(entity_id id)
 	//把这个id加入removel的lIst
 	free_ids.push_back(id);
 	
-	
 }
-
-
 bool is_alive(entity_id id)
 {
 	//先判断这个实体是否是valid的

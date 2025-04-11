@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using D3DengineEditor.GameProject;
 using D3DengineEditor.Components;
 using D3DengineEditor.Utilities;
+using System.Diagnostics;
 namespace D3DengineEditor.Editors
 {
     /// <summary>
@@ -61,5 +62,10 @@ namespace D3DengineEditor.Editors
           
            
         }
+
+    
+      
+
+
     }
 }
