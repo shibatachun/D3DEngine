@@ -8,4 +8,7 @@
   <ItemGroup>
     <ClInclude Include="Common.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
 </Project>

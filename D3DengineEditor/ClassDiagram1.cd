@@ -1,7 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="D3DengineEditor.Components.MSComponent&lt;T&gt;" Collapsed="true">
+    <Position X="8.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAABAAAAAAAgAAAABAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Components\Component.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
   <Class Name="D3DengineEditor.RelayCommand&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="26" Y="4.75" Width="1.5" />
+    <Position X="44.5" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAEACAAQAAECAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Common\RelayCommand.cs</FileName>
@@ -9,7 +17,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="D3DengineEditor.ViewModelBase" Collapsed="true">
-    <Position X="15" Y="1.75" Width="1.5" />
+    <Position X="25.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Common\ViewModelBase.cs</FileName>
@@ -17,140 +25,243 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="D3DengineEditor.App" Collapsed="true">
-    <Position X="24.25" Y="1.75" Width="1.5" />
+    <Position X="44.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>App.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="D3DengineEditor.MainWindow" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="26" Y="2.75" Width="1.5" />
+  <Class Name="D3DengineEditor.EnginePathDialog" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="53.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAEAAAAAAAAABAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>EnginePathDialog.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="D3DengineEditor.MainWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="44.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAEAAAgAAAAABAAAAAAAAA=</HashCode>
       <FileName>MainWindow.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="D3DengineEditor.Components.Component" Collapsed="true">
-    <Position X="21.75" Y="3" Width="1.5" />
+    <Position X="36.5" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
       <FileName>Components\Component.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="D3DengineEditor.Components.MSComponent&lt;T&gt;" Collapsed="true">
-    <Position X="8.25" Y="3" Width="1.5" />
+  <Class Name="D3DengineEditor.Components.ComponentFactory" Collapsed="true">
+    <Position X="46.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Components\Component.cs</FileName>
+      <HashCode>ABAAAAAAAAAACAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Components\ComponentFactory.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="D3DengineEditor.Components.GameEntity" Collapsed="true">
-    <Position X="12.75" Y="3" Width="1.5" />
+    <Position X="30.75" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAEAAIAAIIAAAAEAAAQAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAIAEAAIIIIIAAEIEABAQAgAAAAAAEAAAAAAAAgAA=</HashCode>
       <FileName>Components\GameEntity.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="D3DengineEditor.Components.MSEntity" Collapsed="true">
-    <Position X="15" Y="3" Width="1.5" />
+    <Position X="33" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAIQAAAIBAIIAAAAEACAQAAAACAAAAAAAAAAAgAAA=</HashCode>
+      <HashCode>AAQAIQAAAIBgIIAAAAEACAQAAAACAAAAAAAAAAAoAAA=</HashCode>
       <FileName>Components\GameEntity.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="D3DengineEditor.Components.MSGameEntity" Collapsed="true">
-    <Position X="15" Y="4.5" Width="1.5" />
+    <Position X="33" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Components\GameEntity.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="D3DengineEditor.Components.Transform">
-    <Position X="21.75" Y="4.5" Width="1.5" />
+  <Class Name="D3DengineEditor.Components.Script" Collapsed="true">
+    <Position X="35.25" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAIAwAAIAAAAAAAAAAAAAAAAAgAAAACA=</HashCode>
+      <HashCode>AAAAIAAgAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Components\Script.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="D3DengineEditor.Components.MSScript" Collapsed="true">
+    <Position X="24.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAAgAAAQAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Components\Script.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="D3DengineEditor.Components.Transform" Collapsed="true">
+    <Position X="37.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAIAwAAIAAAAAAAAAAAAAAAAAgAAgACA=</HashCode>
+      <FileName>Components\Transform.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="D3DengineEditor.Components.MSTransform" Collapsed="true">
+    <Position X="26.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAoADAAAAAAoAwDoAAAIgAAAAABAQAAAAQIA=</HashCode>
       <FileName>Components\Transform.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="D3DengineEditor.Dictionaries.ControlTemplates" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="26" Y="1.75" Width="1.5" />
+    <Position X="49.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAgAgAAAAAIAAAAEAAAACAAA=</HashCode>
       <FileName>Dictionaries\ControlTemplates.xaml.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.28" Collapsed="true" />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="D3DengineEditor.EngineAPIStructs.TransformComponent" Collapsed="true">
+    <Position X="51.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAgAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DLLWrapper\EngineAPI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="D3DengineEditor.EngineAPIStructs.ScriptComponent" Collapsed="true">
+    <Position X="46.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>DLLWrapper\EngineAPI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="D3DengineEditor.EngineAPIStructs.GameEntityDescriptor" Collapsed="true">
+    <Position X="44.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>DLLWrapper\EngineAPI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="D3DengineEditor.DLLWrapper.EngineAPI" Collapsed="true">
+    <Position X="51.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAgAAAAAAAAAAAAAAIAAAEAAAAE=</HashCode>
+      <FileName>DLLWrapper\EngineAPI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="D3DengineEditor.Editors.ComponentView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="48" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAQAAAAQAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Editors\WorldEditor\ComponentView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.318" Collapsed="true" />
+  </Class>
+  <Class Name="D3DengineEditor.Editors.NullableBoolToBoolConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="51.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Editors\WorldEditor\GameEntityView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="D3DengineEditor.Editors.GameEntityView" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="27.75" Y="1.75" Width="1.5" />
+    <Position X="46.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>EAAAAAAAAAAAAAABACAAAAAAAAAAAEAAQAAAQACAIAA=</HashCode>
+      <HashCode>EECAAAAAAAAAAAABACAAAAAQAAAAAEAAQAAAQACAIAA=</HashCode>
       <FileName>Editors\WorldEditor\GameEntityView.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="D3DengineEditor.Editors.ProjectLayoutView" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="31.25" Y="3.75" Width="1.5" />
+    <Position X="51.5" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAICAAAA=</HashCode>
       <FileName>Editors\WorldEditor\ProjectLayoutView.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="D3DengineEditor.Editors.WorldEditorView" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="26" Y="5.75" Width="1.5" />
+  <Class Name="D3DengineEditor.Editors.ScriptView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="48" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Editors\WorldEditor\ScriptView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="D3DengineEditor.Editors.TransformView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="53.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>GAADgAAABCBCAAAAgAAAIAQAAAAAABAARAAgAAAAIAA=</HashCode>
+      <FileName>Editors\WorldEditor\TransformView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="D3DengineEditor.Editors.WorldEditorView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="53.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAQAAAAAAQAAAAAAAA=</HashCode>
       <FileName>Editors\WorldEditor\WorldEditorView.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="D3DengineEditor.GameProject.ProjectTemplate" Collapsed="true">
-    <Position X="24.25" Y="4.75" Width="1.5" />
+  <Class Name="D3DengineEditor.GameDev.NewScriptDialog" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="49.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAEAAAAJAAAAAIAAAAAAAEAAAAAAAAAgAgAAEAAAA=</HashCode>
+      <HashCode>ACAAAAAIAACAAAAAAAAAAQAAAAAAAAAAAAAEAARACIA=</HashCode>
+      <FileName>GameDev\NewScriptDialog.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="D3DengineEditor.GameDev.VisualStudio" Collapsed="true">
+    <Position X="51.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAIIABAAAgAAAAAAAAAAAACIAAQYCAAAAAQAAI=</HashCode>
+      <FileName>GameDev\VisualStudio.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="D3DengineEditor.GameProject.ProjectTemplate" Collapsed="true">
+    <Position X="53.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAJAAAAAIAAAAAAAEAAgAAAAAAgAgAAEAAAA=</HashCode>
       <FileName>GameProject\NewProject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="D3DengineEditor.GameProject.NewProject" Collapsed="true">
-    <Position X="17.25" Y="3" Width="1.5" />
+    <Position X="42" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AEAAAAAAAAAAAAQACAoAAASAAAAEAAAAAEACAEAICAA=</HashCode>
+      <HashCode>AEAAAAAAAAAAAAQACAgAAASCAAAEAAQAAEACAEAICAA=</HashCode>
       <FileName>GameProject\NewProject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="D3DengineEditor.GameProject.NewProjectView" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="29.5" Y="2.75" Width="1.5" />
+    <Position X="48" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIA=</HashCode>
       <FileName>GameProject\NewProjectView.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="D3DengineEditor.GameProject.ProjectData" Collapsed="true">
-    <Position X="27.75" Y="3.75" Width="1.5" />
+    <Position X="48" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CAAAAAAAAAAAAAAACAAAAAAAAAAAAAABAAAiAAEAAAA=</HashCode>
       <FileName>GameProject\OpenProject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="D3DengineEditor.GameProject.ProjectDataList" Collapsed="true">
-    <Position X="29.5" Y="3.75" Width="1.5" />
+    <Position X="49.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
       <FileName>GameProject\OpenProject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="D3DengineEditor.GameProject.OpenProject" Collapsed="true">
-    <Position X="31.25" Y="2.75" Width="1.5" />
+    <Position X="53.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABAAAAAAAAAAIAAAAKAAAAAAAAAAAAAAAQAACAAAAQA=</HashCode>
       <FileName>GameProject\OpenProject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="D3DengineEditor.GameProject.OpenProjectView" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="24.25" Y="3.75" Width="1.5" />
+    <Position X="44.5" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAAAAAAAAAAAQAAAAABAAAAAAAAAAAAAA=</HashCode>
       <FileName>GameProject\OpenProjectView.xaml.cs</FileName>
@@ -158,43 +269,64 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="D3DengineEditor.GameProject.Project" Collapsed="true">
-    <Position X="19.5" Y="3" Width="1.5" />
+    <Position X="39.75" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>DAAAgIGCAAAAAEIAgACAAAQAAIAQKRAAAAgAEAAEAAA=</HashCode>
+      <HashCode>DAAAgJGCgAAEgmIAgCWAQAQgCICUKRAQAA2AGEAEAAA=</HashCode>
       <FileName>GameProject\Project.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="D3DengineEditor.GameProject.ProjectBrowserDialog" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="26" Y="3.75" Width="1.5" />
+    <Position X="46.25" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <HashCode>AAAAAAAAAAAgAgAAAAAAAAIAIAAAAAAAAAAAAAAAgAA=</HashCode>
       <FileName>GameProject\ProjectBrowserDialog.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="D3DengineEditor.GameProject.Scene" Collapsed="true">
-    <Position X="10.5" Y="3" Width="1.5" />
+    <Position X="28.5" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIIEAAAAAAAAAEIAACAUCAAgEAAAEAAAAAAAAAAA=</HashCode>
       <FileName>GameProject\Scene.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="D3DengineEditor.Utilities.Controls.NumberBox" Collapsed="true">
+    <Position X="18.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAABAIAQAAAAQAABAGAUAIAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Utilities\Controls\NumberBox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="D3DengineEditor.Utilities.Controls.ScalarBox" Collapsed="true">
+    <Position X="18.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Controls\ScalarBox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="D3DengineEditor.Utilities.Controls.VectorBox" Collapsed="true">
+    <Position X="49.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IABAAAAAAQAAICAAAAAAAABAIAAQAAAAAACAABAIYAE=</HashCode>
+      <FileName>Utilities\Controls\VectorBox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="D3DengineEditor.Utilities.LogMessage" Collapsed="true">
-    <Position X="24.25" Y="2.75" Width="1.5" />
+    <Position X="53.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAgAEAAAAAAAAAAAAAAAEAEAAAAAAIAABAQA=</HashCode>
       <FileName>Utilities\Logger.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="D3DengineEditor.Utilities.Logger" Collapsed="true">
-    <Position X="29.5" Y="1.75" Width="1.5" />
+    <Position X="49.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAEAEAAAAAAAAAAAAAAgAAAAAEgAAAQBAAAA=</HashCode>
       <FileName>Utilities\Logger.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="D3DengineEditor.Utilities.LoggerView" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="31.25" Y="1.75" Width="1.5" />
+    <Position X="51.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Utilities\LoggerView.xaml.cs</FileName>
@@ -202,14 +334,14 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="D3DengineEditor.Utilities.Serializer" Collapsed="true">
-    <Position X="27.75" Y="4.75" Width="1.5" />
+    <Position X="49.75" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAEAAAAAAAAAAA=</HashCode>
       <FileName>Utilities\Serializer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="D3DengineEditor.Utilities.UndoRedoAction" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="31.25" Y="4.75" Width="1.5" />
+    <Position X="46.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAABAAAAAAAABQBAAAAAAAAAAAAAAAAIAA=</HashCode>
       <FileName>Utilities\UndoRedo.cs</FileName>
@@ -217,43 +349,71 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="D3DengineEditor.Utilities.UndoRedo" Collapsed="true">
-    <Position X="29.5" Y="4.75" Width="1.5" />
+    <Position X="44.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAgIAAAABgAAACAAAAABAAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>Utilities\UndoRedo.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="D3DengineEditor.Utilities.UndoRedoView" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="24.25" Y="5.75" Width="1.5" />
+    <Position X="48" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Utilities\UndoRedoView.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
+  <Class Name="D3DengineEditor.Utilities.ID" Collapsed="true">
+    <Position X="48" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Utilities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="D3DengineEditor.Utilities.MathUtil" Collapsed="true">
-    <Position X="27.75" Y="2.75" Width="1.5" />
+    <Position X="46.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgQAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Utilities\Utilities.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="D3DengineEditor.Components.IMSComponent" Collapsed="true">
-    <Position X="24.25" Y="7" Width="1.5" />
+    <Position X="44.5" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Components\Component.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="D3DengineEditor.Utilities.IUndoRedo" Collapsed="true">
-    <Position X="26" Y="7" Width="1.5" />
+    <Position X="46.25" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAABAAAAAAAAAQBAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Utilities\UndoRedo.cs</FileName>
     </TypeIdentifier>
   </Interface>
+  <Enum Name="D3DengineEditor.Components.ComponentType" Collapsed="true">
+    <Position X="46.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Components\ComponentFactory.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="D3DengineEditor.GameProject.BuildConfiguration" Collapsed="true">
+    <Position X="44.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAgAEBAAAAA=</HashCode>
+      <FileName>GameProject\Project.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="D3DengineEditor.Utilities.Controls.VectorType" Collapsed="true">
+    <Position X="49.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAMABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utilities\Controls\VectorBox.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Enum Name="D3DengineEditor.Utilities.MessageType" Collapsed="true">
-    <Position X="24.25" Y="8" Width="1.5" />
+    <Position X="48" Y="9.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAQAAAAAAABAAAAAAAAAAAAAAAEAAAAA=</HashCode>
       <FileName>Utilities\Logger.cs</FileName>

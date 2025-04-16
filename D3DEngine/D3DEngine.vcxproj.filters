@@ -24,4 +24,7 @@
     <ClCompile Include="Content\ContentLoader.h" />
     <ClCompile Include="Content\ContentLoader.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
 </Project>

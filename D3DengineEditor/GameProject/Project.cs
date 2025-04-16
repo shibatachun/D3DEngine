@@ -85,17 +85,17 @@ namespace D3DengineEditor.GameProject
 
         public ReadOnlyObservableCollection<Scene> Scenes { get; private set; }
 
-        private Scene _actriveScene;
+        private Scene _activeScene;
         
         //确认是否是当前激活的Scene
         public Scene ActiveScene
         {
-            get => _actriveScene;
+            get => _activeScene;
             set
             {
-                if (_actriveScene != value)
+                if (_activeScene != value)
                 {
-                    _actriveScene = value;
+                    _activeScene = value;
                     OnPropertyChanged(nameof(ActiveScene));
                 }
             }
@@ -117,7 +117,7 @@ namespace D3DengineEditor.GameProject
         public ICommand DebugStartWithoutDebuggingCommand { get; private set; }  
         public ICommand DebugStopCommand { get; private set; }  
 
-        private void SetCommnads()
+        private void SetCommands()
         {
             AddSceneCommand = new RelayCommand<object>(x =>
             {
@@ -203,7 +203,7 @@ namespace D3DengineEditor.GameProject
         //当前project unload也就是说退出当前Project是，重设undoredo的list
         public void Unload()
         {
-            UnloadeGameCodeDll();
+            UnloadGameCodeDll();
             VisualStudio.CloseVisualStudio();
             UndoRedo.Reset();
         }
@@ -246,7 +246,7 @@ namespace D3DengineEditor.GameProject
             Debug.Assert(ActiveScene != null);
 
             await BuildGameCodeDll(false);
-            SetCommnads();
+            SetCommands();
          
         }
 
@@ -255,7 +255,7 @@ namespace D3DengineEditor.GameProject
             try
             {
 
-                UnloadeGameCodeDll();
+                UnloadGameCodeDll();
                 //编译游戏代码
                 await Task.Run(()=>VisualStudio.BuildSolution(this, GetConfigurationName(DllBuildConfig), showWindow));
                 if (VisualStudio.BuildSucceeded)
@@ -302,7 +302,7 @@ namespace D3DengineEditor.GameProject
             }
         }
 
-        private void UnloadeGameCodeDll()
+        private void UnloadGameCodeDll()
         {
             ActiveScene.GameEntities.Where(x => x.GetComponent<Script>() !=null).ToList().ForEach(x => x.IsActive = false);
             if (EngineAPI.UnloadGameCodeDll() != 0)
